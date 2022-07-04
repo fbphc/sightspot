@@ -14,5 +14,13 @@ app.use("/search", searchRouter);
 app.use("/movieContent", contentRouter);
 
 app.use("/topRated", topRatedRouter);
-
+app.get("*", function (request, response) {
+    response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
+    }); 
+/* app.get("/", (req, res)=>{
+    res.json()
+}) */
 app.listen(PORT, (req, res) => console.log("Listening at port:", PORT));
+
+
+//client/build/index.html
