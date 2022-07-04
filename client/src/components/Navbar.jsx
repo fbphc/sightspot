@@ -1,13 +1,20 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
-import { Link } from "react-router-dom";
+import logo from "../img/logo_transparent.png";
+
 function Nav() {
   return (
     <Navbar bg="dark" variant="dark">
-      <Container className="d-flex justify-content-center">
-        <Link to="/">##################</Link>
-      </Container>
+      
+      <img
+            className="d-block pl-5"
+            src={logo}
+            alt="logo"
+            style={{ width: "3rem" }}
+          />
+          <p className="text-light my-auto">SightSpot</p>
+      
     </Navbar>
   );
 }
