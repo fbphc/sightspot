@@ -23,6 +23,7 @@ function App() {
           <Route path="/search_Results" element={<SearchResults />} /> {/* click here */}
           <Route path="/search_Results/:name" element={<Result />} />
 
+
           <Route path="/board" element={<Board /> } />
         </Routes>
         <Footer />

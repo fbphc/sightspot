@@ -6,9 +6,11 @@ import contentRouter from "./routes/movieContent.js";
 import topRatedRouter from "./routes/topRated.js";
 import { getTopRated, getSearchResults, getMovieContent } from "./controllers/controllers.js"
 
+/*--------*/
+// DON'T CHANGE ANYTHING 
 import path from "path";
-
 const  __dirname = path.resolve();
+/*-------*/
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -20,9 +22,7 @@ app.use("/movieContent", contentRouter);
 app.use("/topRated", topRatedRouter);
 
 /* ----------------*/
-
-
-
+// DON'T CHANGE ANYTHING
 app.use(express.static(path.resolve(__dirname, "./client/build"))); 
 app.get("*", function (request, response) {
     response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));

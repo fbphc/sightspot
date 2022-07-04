@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { motion } from "framer-motion";
 import { Context } from "../context/Context";
 import { useNavigate } from "react-router-dom";
-import { x } from "./daje";
 
 
 function TopRated() {
@@ -17,10 +16,8 @@ function TopRated() {
           fetchedData.map((item) => {
             return (
               <div onClick={()=>{
-                
                 setSearchInput({ title: item.title, year: item.year })
                 navigate("/search_Results");
-                
               }}
                 key={item.id}
                 style={{

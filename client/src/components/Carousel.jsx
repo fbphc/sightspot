@@ -2,9 +2,15 @@ import React, { useContext } from "react";
 import { Carousel } from "react-bootstrap";
 import { Context } from "../context/Context";
 import logo from "../img/logo_transparent.png"
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+
+
 
 function ImgCarousel() {
-  const { fetchedData } = useContext(Context);
+  const { fetchedData, setSearchInput } = useContext(Context);
+
+  const navigate = useNavigate();
 
   return (
     <div className="d-flex position-relative">
@@ -15,18 +21,21 @@ function ImgCarousel() {
           return (
             <Carousel.Item key={idx + ""}>
               <div className="w-100 p-3 mx-auto justify-content-center d-flex">
-                <div>
+                <motion.div whileHover={{scale: 0.95, opacity: 0.9, cursor: "pointer"}} onClick={()=>{
+                setSearchInput({ title: item.title, year: item.year })
+                navigate("/search_Results");
+              }}>
                   <img
                     className="d-block border border-white rounded-5 mx-auto"
                     src={item.image}
                     alt="Second slide"
                     style={{
-                      height: "24rem",
+                      height: "22rem",
                     }}
                   />
-                  <p className="text-center">Title: {item.title}</p>
-                  <p className="text-center">Year: {item.year}</p>
-                </div>
+                  <p className="text-center m-0">Title: {item.title}</p>
+                  <p className="text-center m-0">Year: {item.year}</p>
+                </motion.div>
               </div>
             </Carousel.Item>
           );
