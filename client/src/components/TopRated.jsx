@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 
 function TopRated() {
-  const { fetchedData, setSearchInput } = useContext(Context);
+  const { fetchedData, setSearchInput, IMG_URL } = useContext(Context);
 
   const navigate = useNavigate();
   return (
@@ -21,12 +21,12 @@ function TopRated() {
               }}
                 key={item.id}
                 style={{
-                  width: "12rem",
-                  height: "18rem",
+                  width: "14rem",
+                  height: "20rem",
                   position: "relative",
-                  background: `url(${item.image}) center/cover`,
+                  background: `url(${IMG_URL + item.poster_path}) center/cover`,
                   overflow: "hidden",
-                  cursor: "pointer"
+                  cursor: "pointer", borderRadius: "0.8rem"
                 }}
                 className="mx-3 my-4 shadow-lg"
               >
@@ -38,14 +38,14 @@ function TopRated() {
                   initial={{
                     opacity: 0,
                   }}
-                  whileHover={{ opacity: 1, translateY: "-30px" }}
-                  transition={{ duration: 0.4 }}
+                  whileHover={{ opacity: 1, translateY: "-30px", scale: 0.9 }}
+                  transition={{ duration: 0.3 }}
                 >
                   <div
                     style={{
                       height: "min-content",
                       width: "100%",
-                      margin: "0 auto",
+                      margin: "2rem auto",
                       background:
                         "radial-gradient(circle, rgba(255,255,255,0.875770376509979) 30%, #ecececdf 65%)",
                       padding: "1rem",
@@ -57,11 +57,12 @@ function TopRated() {
                       <b>{item.title}</b>
                     </p>
                     <p>
-                      Rate: <b>{item.imDbRating}</b>
+                      <b>{item.release_date.split("-")[0]}</b>
                     </p>
                     <p>
-                      Year: <b>{item.year}</b>
+                      Rate: <b>{item.vote_average}</b>
                     </p>
+                    
                   </div>
                 </motion.div>
               </div>

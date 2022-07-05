@@ -3,16 +3,17 @@ import dotenv from "dotenv";
 
 dotenv.config({ path: "../.env" });
 
-function getTopRated (req, res) {
+function getTopRated(req, res) {
   axios
     .get(
-      `https://imdb-api.com/en/API/MostPopularMovies/${process.env.IMDB_KEY}`
+      `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.TMDB_KEY}&language=en-US&page=1`
+      //`https://imdb-api.com/en/API/MostPopularMovies/${process.env.IMDB_KEY}`
     )
     .then((topRated) => res.json(topRated.data))
     .catch((err) => console.log(err));
-};
+}
 
-function getSearchResults(req, res){
+function getSearchResults(req, res) {
   const reqParams = req.params.movieYear;
   const url =
     req.params.movieYear === "all"
@@ -22,13 +23,13 @@ function getSearchResults(req, res){
     .get(url)
     .then((searchResults) => res.json(searchResults.data))
     .catch((err) => console.log(err));
-};
-function getMovieContent(req, res){
+}
+function getMovieContent(req, res) {
   axios
     .get(
       `http://www.omdbapi.com/?apikey=${process.env.OMDB_KEY}&i=${req.params.movieId}`
     )
     .then((searchResults) => res.json(searchResults.data))
     .catch((err) => console.log(err));
-};
+}
 export { getTopRated, getSearchResults, getMovieContent };

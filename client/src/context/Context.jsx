@@ -8,12 +8,12 @@ function Provider({ children }) {
   const [fetchedData, setFetchedData] = useState([]);
   
   const [resultSearch, setResultSearch] = useState([]);
-
+const IMG_URL = "https://image.tmdb.org/t/p/w1280"
 
   useEffect(() => {
     axios
       .get(`/topRated/topRatedList`)
-      .then((topRated) => setFetchedData(topRated.data.items))
+      .then((topRated) => setFetchedData(topRated.data.results))
       .catch((err) => console.log(err));
   }, []);
 
@@ -32,8 +32,7 @@ function Provider({ children }) {
         searchInput,
         setSearchInput,
         fetchedData,
-        /* searchActive,
-        setSearchActive, */
+        IMG_URL,
         resultSearch,
         setResultSearch,
       }}

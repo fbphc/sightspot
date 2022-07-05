@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 
 function ImgCarousel() {
-  const { fetchedData, setSearchInput } = useContext(Context);
+  const { fetchedData, setSearchInput, IMG_URL } = useContext(Context);
 
   const navigate = useNavigate();
 
@@ -26,15 +26,15 @@ function ImgCarousel() {
                 navigate("/search_Results");
               }}>
                   <img
-                    className="d-block border border-white rounded-5 mx-auto"
-                    src={item.image}
+                    className="d-block border border-white mx-auto"
+                    src={IMG_URL + item.poster_path}
                     alt="Second slide"
                     style={{
-                      height: "22rem",
+                      height: "23rem", borderRadius: "0.8rem"
                     }}
                   />
-                  <p className="text-center m-0">Title: {item.title}</p>
-                  <p className="text-center m-0">Year: {item.year}</p>
+                  <p className="text-center m-0 lead"><b>{item.title}</b></p>
+                  <p className="text-center m-0 lead"><b>{item.release_date.split("-")[0]}</b></p>
                 </motion.div>
               </div>
             </Carousel.Item>
