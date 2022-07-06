@@ -22,7 +22,7 @@ function ImgCarousel() {
             <Carousel.Item key={idx + ""}>
               <div className="w-100 p-3 mx-auto justify-content-center d-flex">
                 <motion.div whileHover={{scale: 0.95, opacity: 0.9, cursor: "pointer"}} onClick={()=>{
-                setSearchInput({ title: item.title, year: item.year })
+                setSearchInput({ titleMovie: item.title, year: item.year })
                 navigate("/search_Results");
               }}>
                   <img
@@ -43,8 +43,8 @@ function ImgCarousel() {
       })}
     </Carousel>
     <div className="w-50">
-<div  className="d-flex justify-content-center align-items-center" style={{clipPath: "polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%)", backgroundColor: "#8AB7F4", width:"100%",height:"100%"}}>
-<img src={logo} alt="logo" style={{width:"30rem"}}/>
+<div  className="d-flex justify-content-center align-items-center" style={{clipPath: "polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%)", backgroundColor: "#8AB7F4", width:"100%",height:"30rem"}}>{/* maxHeight:"30rem", minHeight: "18rem" */}
+<img src={logo} alt="logo" style={{ minWidth: "10rem", maxHeight: "100%"}}/>
 </div>
       </div>
     </div>

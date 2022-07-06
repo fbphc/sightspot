@@ -13,7 +13,6 @@ function Nav() {
             style={{ width: "3rem" }}
           />
           <p className="text-light my-auto">SightSpot</p>
-      
     </Navbar>
   );
 }

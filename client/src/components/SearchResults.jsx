@@ -9,7 +9,8 @@ import { useNavigate } from "react-router-dom";
 function SearchResults() {
   const { resultSearch, IMG_URL } = useContext(Context);
   const navigate = useNavigate();
-  if (resultSearch === undefined) {
+  
+  if (resultSearch.length === 0) {
     return <NotFound />;
   } else {
     return (

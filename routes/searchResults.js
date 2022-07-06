@@ -4,6 +4,6 @@ import { getSearchResults } from "../controllers/controllers.js";
 
 const searchRouter = Router()
 
-searchRouter.get("/:movieTitle&:movieYear", getSearchResults);
+searchRouter.get("/:movieTitle", getSearchResults);
 
   export default searchRouter;

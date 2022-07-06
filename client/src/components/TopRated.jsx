@@ -16,7 +16,7 @@ function TopRated() {
           fetchedData.map((item) => {
             return (
               <div onClick={()=>{
-                setSearchInput({ title: item.title, year: item.year })
+                setSearchInput({ titleMovie: item.title })
                 navigate("/search_Results");
               }}
                 key={item.id}
