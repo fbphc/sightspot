@@ -38,14 +38,14 @@ function TopRated() {
                   initial={{
                     opacity: 0,
                   }}
-                  whileHover={{ opacity: 1, translateY: "-30px", scale: 0.9 }}
+                  whileHover={{ opacity: 1, translateY: "-30px"}}
                   transition={{ duration: 0.3 }}
                 >
                   <div
                     style={{
                       height: "min-content",
                       width: "100%",
-                      margin: "2rem auto",
+                      margin: "1rem auto",
                       background:
                         "radial-gradient(circle, rgba(255,255,255,0.875770376509979) 30%, #ecececdf 65%)",
                       padding: "1rem",
@@ -53,13 +53,13 @@ function TopRated() {
                     }}
                     className="position-absolute bottom-0 d-flex flex-column  text-center shadow-lg"
                   >
-                    <p>
+                    <p className="my-1">
                       <b>{item.title}</b>
                     </p>
-                    <p>
+                    <p className="my-1">
                       <b>{item.release_date.split("-")[0]}</b>
                     </p>
-                    <p>
+                    <p className="my-1">
                       Rate: <b>{item.vote_average}</b>
                     </p>
                     

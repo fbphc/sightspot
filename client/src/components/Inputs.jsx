@@ -46,26 +46,24 @@ function Inputs() {
           </Col>
           <Col>
             <InputGroup className="my-3">
-              <InputGroup.Text id="title-input">Title</InputGroup.Text>
+              <InputGroup.Text id="title-input">Movies</InputGroup.Text>
               <FormControl
                 onChange={(e) => setTitleText(e.target.value)}
-                placeholder="Title"
-                aria-label="Title"
-                aria-describedby="title-input"
+                placeholder="Find a movie"
+                aria-label="Movies"
+                aria-describedby="movie-input"
                 value={titleText}
               />
             </InputGroup>
           </Col>
           <Col>
             <InputGroup className="my-3">
-              <InputGroup.Text id="year-input">Year</InputGroup.Text>
+              <InputGroup.Text id="year-input">Series</InputGroup.Text>
               <FormControl
                 onChange={(e) => setYearText(e.target.value)}
-                maxLength="4"
-                min="1950"
-                placeholder="ex. 1984"
-                aria-label="Year"
-                aria-describedby="year-input"
+                placeholder="Find a serie"
+                aria-label="Series"
+                aria-describedby="serie-input"
                 value={yearText}
               />
             </InputGroup>

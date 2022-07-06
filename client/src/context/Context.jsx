@@ -22,7 +22,7 @@ const IMG_URL = "https://image.tmdb.org/t/p/w1280"
     const path = searchInput.year ===  "" ? `/search/${searchInput.title}&all` : `/search/${searchInput.title}&${searchInput.year}`;
     axios
       .get(path)
-      .then((searchResults) => setResultSearch(searchResults.data.Search))
+      .then((searchResults) => setResultSearch(searchResults.data.results))
       .catch((err) => console.log(err));
   }, [searchInput]);
  

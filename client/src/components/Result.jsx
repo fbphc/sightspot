@@ -1,21 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import logoSmall from "../img/logo_transparent_small.png"
+import { Context } from "../context/Context";
 
 function Result() {
+  const { IMG_URL } = useContext(Context);
+
   const navigate = useNavigate();
   const [movieData, setMovieData] = useState({});
   const params = useParams();
   const movieId = params.name;
 
+
+  // fix with async-await
   useEffect(() => {
     axios
       .get(`/movieContent/${movieId}`)
       .then((searchResults) => setMovieData(searchResults.data))
       .catch((err) => console.log(err));
   }, [movieId]);
+
 
   return (
     <>
@@ -50,7 +56,7 @@ function Result() {
                 height: "36rem",
                 background: `url(${
                   movieData.Poster !== "N/A"
-                    ? movieData.Poster
+                    ? IMG_URL + movieData.poster_path
                     : "https://redi.it/wp-content/uploads/2015/08/not-available.png"
                 }) center / cover no-repeat`,
               }}
@@ -58,14 +64,14 @@ function Result() {
           </Col>
           <Col>
             <div>
-              <p>Title: {movieData.Title}</p>
-              <p>Year: {movieData.Year}</p>
-              <p>Release: {movieData.Released}</p>
-              <p>Time: {movieData.Runtime}</p>
-              <p>Genre: {movieData.Genre}</p>
+              <p>Title: {movieData.original_title}</p>
+              
+              <p>Year: {movieData.release_date !== undefined ? movieData.release_date.split("-")[0] : "-"}</p>
+              <p>WebSite:</p>
+             <p>{movieData.homepage}</p>
               <p>Cast: {movieData.Actors}</p>
               <p>Director: {movieData.Director}</p>
-              <p>Plot: {movieData.Plot}</p>
+              <p>Plot: {movieData.overview}</p>
               <p>Country:{movieData.Country}</p>
               <p>Adwards: {movieData.Awards}</p>
               <p>Type: {movieData.Type}</p>
