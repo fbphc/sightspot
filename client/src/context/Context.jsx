@@ -19,7 +19,9 @@ const IMG_URL = "https://image.tmdb.org/t/p/w1280"
 
 
   useEffect(() => {
-    const path = searchInput.year ===  "" ? `/search/${searchInput.title}&all` : `/search/${searchInput.title}&${searchInput.year}`;
+    //const path = searchInput.year ===  "" ? `/search/${searchInput.title}&all` : `/search/${searchInput.title}&${searchInput.year}`;
+    const path = `/search/${searchInput.title}&all`;
+    
     axios
       .get(path)
       .then((searchResults) => setResultSearch(searchResults.data.results))
