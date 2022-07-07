@@ -1,19 +1,32 @@
-import React, { useContext } from "react";
+import React, { useContext,useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Context } from "../context/Context";
+import { Context } from "../../context/Context";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
+
+/**---MOVIES----------------------------- */
 
 function TopRated() {
-  const { fetchedData, setSearchInput, IMG_URL } = useContext(Context);
-
+  const {  setSearchInput, IMG_URL } = useContext(Context);
+  const [fetchedTop, setFetchedTop] = useState([])
   const navigate = useNavigate();
+
+  useEffect(() => {
+   
+    axios
+      .get(`/home/top/tv`)
+      .then((topRated) => setFetchedTop(topRated.data.results))
+      .catch((err) => console.log(err));
+  }, []);
+
+
   return (
     <>
-      <h1 className="text-center">Top Rated</h1>
+      <h1 className="text-center">Top Rated Series</h1>
       <div className="mx-auto d-flex flex-wrap justify-content-center">
         {
-          fetchedData.map((item) => {
+          fetchedTop.map((item) => {
             return (
               <div onClick={()=>{
                 setSearchInput({ titleMovie: item.title })
@@ -72,6 +85,7 @@ function TopRated() {
       </div>
     </>
   );
+      
 }
 
 export default TopRated;

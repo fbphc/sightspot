@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import Spinner from "./Spinner";
 import { Context } from "../context/Context";
-import TopRated from "./TopRated";
+import TopRated from "./home/Upcoming";
 
 function Home() {
   const { fetchedData } = useContext(Context);

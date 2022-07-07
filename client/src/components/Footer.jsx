@@ -4,23 +4,18 @@ import logo from "../img/logo_transparent_small_black.png";
 function Footer() {
   return (
     <>
-      <div
-        className="mt-5"
-        style={{
-          clipPath: "polygon(0 0, 75% 0%, 100% 100%, 0% 100%)",
-          backgroundColor: "#8AB7F4",
-          width: "10rem",
-          height: "2rem",
-          borderTop: "3px solid black",
-        }}
-      ></div>
-      <footer>
+            
+      <footer className="position-relative" style={{ marginTop: "5%"}}>
         <div
-          className="w-25 position-absolute"
+          className="position-absolute"
           style={{
-            clipPath: "polygon(0 0, 90% 0, 100% 100%, 0% 100%)",
+            clipPath: "polygon(0 0, 75% 0%, 100% 100%, 0% 100%)",
             backgroundColor: "#8AB7F4",
-            height: "2.4rem",
+            bottom: "0%",
+            width: "40%",
+            height: "4rem",
+            borderTop: "3px solid black",
+            zIndex: "1",
           }}
         >
           <img
@@ -31,7 +26,7 @@ function Footer() {
           />
           <p
             className="position-absolute m-0"
-            style={{ bottom: "10%", left: "12%" }}
+            style={{ bottom: "15%", left: "3rem" }}
           >
             Ⓒsightspot
           </p>

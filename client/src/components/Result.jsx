@@ -32,7 +32,7 @@ function Result() {
   );
 
   const opts = {
-    height: "390",
+   height: "390",
     width: "640",
     playerVars: {
       autoplay: 0,
@@ -44,7 +44,7 @@ function Result() {
   }
   return (
     <>
-      <Container className="my-5">
+      <div style={{width: "80%", margin: "0 auto"}}>
         <Row>
           <Col className="col-1 p-0">
             <div
@@ -65,7 +65,7 @@ function Result() {
               </div>
             </div>
           </Col>
-          <Col className="d-flex">
+          <Col className="d-flex " style={{border: "3px solid red"}}>
             <div
               className="shadow-lg mx-auto"
               style={{
@@ -79,31 +79,58 @@ function Result() {
               }}
             ></div>
           </Col>
-          <Col>
-            <div>
-              <p>Title: {movieData.original_title}</p>
+          <Col className="d-flex flex-column">
+            <Row>
+              <div
+                className="mx-auto"
+                style={{
+                  borderRadius: "1.2rem",
+                  overflow: "hidden",
+                  maxWidth: "max-content",
+                }}
+              >
+                {trailer === undefined ? (
+                  <YouTube
+                    videoId={movieData.videos.results[0].key}
+                    opts={opts}
+                    onReady={onReady}
+                    
+                  />
+                ) : (
+                  <YouTube
+                    videoId={trailer.key}
+                    opts={opts}
+                    onReady={onReady}
+                  />
+                )}
+              </div>
+            </Row>
+            <Row>
+              <div>
+                <p>Title: {movieData.original_title}</p>
 
-              <p>
-                Genre:{" "}
-                {movieData.genres.map((item, idx) => (
-                  <span key={idx + "gen"}>{item.name} </span>
-                ))}
-              </p>
-              <p>Plot: {movieData.overview}</p>
-              <p>
-                Year:{" "}
-                {movieData.release_date !== undefined
-                  ? movieData.release_date.split("-")[0]
-                  : "-"}
-              </p>
-              <p>WebSite: {movieData.homepage}</p>
-              <p>
-                Spoken Languages:{" "}
-                {movieData.spoken_languages.map((item, idx) => (
-                  <span key={idx + "laspoken"}>{item.name} </span>
-                ))}
-              </p>
-            </div>
+                <p>
+                  Genre:{" "}
+                  {movieData.genres.map((item, idx) => (
+                    <span key={idx + "gen"}>{item.name} </span>
+                  ))}
+                </p>
+                <p>Plot: {movieData.overview}</p>
+                <p>
+                  Year:{" "}
+                  {movieData.release_date !== undefined
+                    ? movieData.release_date.split("-")[0]
+                    : "-"}
+                </p>
+                <p>WebSite: {movieData.homepage}</p>
+                <p>
+                  Spoken Languages:{" "}
+                  {movieData.spoken_languages.map((item, idx) => (
+                    <span key={idx + "laspoken"}>{item.name} </span>
+                  ))}
+                </p>
+              </div>
+            </Row>
           </Col>
           <Col className="col-1 p-0">
             <div
@@ -131,28 +158,7 @@ function Result() {
             </div>
           </Col>
         </Row>
-      </Container>
-      
-          <div
-            className="mx-auto"
-            style={{
-              borderRadius: "1.2rem",
-              overflow: "hidden",
-              maxWidth: "max-content",
-            }}
-          >
-            {trailer === undefined ? (
-              <YouTube
-                videoId={movieData.videos.results[0].key}
-                opts={opts}
-                onReady={onReady}
-              />
-            ) : (
-              <YouTube videoId={trailer.key} opts={opts} onReady={onReady} />
-            )}
-          </div>
-        
-     
+      </div>
 
       <Button
         className="mx-auto d-block m-2 w-25"

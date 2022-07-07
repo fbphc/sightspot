@@ -30,10 +30,10 @@ function Inputs() {
       <form className="w-100" onSubmit={handleInputs}>
         <Row className="my-0">
           <Col className="d-flex justify-content-center align-items-center">
-            <Link to="/" className="text-dark h5 mx-5 w-25">
+            <Link to="/top_Movies" className="text-dark h5 mx-5 w-25">
               | Top Rated Movies|
             </Link>
-            <Link to="/" className="text-dark h5 mx-5 w-25">
+            <Link to="/top_Series" className="text-dark h5 mx-5 w-25">
               | Top Rated Series|
             </Link>
           </Col>
@@ -44,7 +44,7 @@ function Inputs() {
               <InputGroup.Text id="title-input">Title</InputGroup.Text>
               <FormControl
                 onChange={(e) => setTitleText(e.target.value)}
-                placeholder="search..."
+                placeholder="Movies / Series"
                 aria-label="Movies"
                 aria-describedby="movie-input"
                 value={titleText}
@@ -61,6 +61,7 @@ function Inputs() {
               >
                 Search
               </Button>
+              
               <Button
                 className="mx-5 w-25"
                 variant="outline-secondary"

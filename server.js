@@ -3,8 +3,10 @@ import cors from "cors";
 import "dotenv/config";
 import searchRouter from "./routes/searchResults.js";
 import contentRouter from "./routes/movieContent.js";
+import upcomingRouter from "./routes/upcomingList.js";
 import topRatedRouter from "./routes/topRated.js";
-import { getTopRated, getSearchResults, getMovieContent } from "./controllers/controllers.js"
+
+
 
 /*--------*/
 // DON'T CHANGE ANYTHING 
@@ -19,7 +21,10 @@ app.use(cors());
 app.use("/search", searchRouter);
 app.use("/movieContent", contentRouter);
 
-app.use("/topRated", topRatedRouter);
+app.use("/home", upcomingRouter);
+app.use("/home/top/", topRatedRouter);
+
+
 
 /* ----------------*/
 // DON'T CHANGE ANYTHING

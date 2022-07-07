@@ -7,6 +7,8 @@ import Board from "./components/Board";
 import Footer from "./components/Footer";
 import Result from "./components/Result";
 import SearchResults from "./components/SearchResults";
+import TopMovies from "./components/home/TopMovies"
+import TopSeries from "./components/home/TopSeries"
 
 import ImgCarousel from './components/Carousel'
 import Inputs from "./components/Inputs";
@@ -20,6 +22,9 @@ function App() {
         <Inputs />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/top_Movies" element={<TopMovies />} />
+          <Route path="/top_Series" element={<TopSeries />} />
+
           <Route path="/search_Results" element={<SearchResults />} /> {/* click here */}
           <Route path="/search_Results/:name" element={<Result />} />
 

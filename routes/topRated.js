@@ -4,6 +4,6 @@ import { getTopRated } from "../controllers/controllers.js";
 
 const topRatedRouter = Router();
 
-topRatedRouter.get("/topRatedList", getTopRated);
+topRatedRouter.get("/movie", getTopRated);
 
 export default topRatedRouter;
