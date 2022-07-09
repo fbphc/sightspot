@@ -54,6 +54,14 @@ function getMovieSContent(req, res) {
    .then((searchResults) => res.json(searchResults.data))
    .catch((err) => console.log(err));
 }
+function getTvSContent(req, res) {
+  axios
+   .get(
+     `https://api.themoviedb.org/3/tv/${req.params.contentId}/similar?api_key=${process.env.TMDB_KEY}&language=en-US&append_to_response=videos`
+   )
+   .then((searchResults) => res.json(searchResults.data))
+   .catch((err) => console.log(err));
+}
 function getTvContent(req, res) {
   axios
    .get(
