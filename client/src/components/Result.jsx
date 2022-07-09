@@ -11,29 +11,33 @@ function Result() {
   const inState = {
     genres: [],
     spoken_languages: [],
-    videos: { results: [{ key: "", name: "" }] },
+    videos: {
+      results: [
+        { key: "", name: "", realeas_date: "0-0-0", first_air_date: "0-0-0" },
+      ],
+    },
   };
 
   const navigate = useNavigate();
   const [movieData, setMovieData] = useState(inState);
 
   const params = useParams();
-  const movieId = params.name.split("&")[1];
   const mediaType = params.name.split("&")[0];
-console.log(typeof mediaType);
+  const contentId = params.name.split("&")[1];
+
   useEffect(() => {
     axios
-      .get(`/${mediaType}/${movieId}`)
+      .get(`/${mediaType}/${contentId}`)
       .then((searchResults) => setMovieData(searchResults.data))
       .catch((err) => console.log(err));
-  }, [movieId]);
+  }, [contentId, mediaType]);
 
   const trailer = movieData.videos.results.find(
     (item) => item.name === "Official Trailer"
   );
 
   const opts = {
-   height: "390",
+    height: "390",
     width: "640",
     playerVars: {
       autoplay: 0,
@@ -45,7 +49,7 @@ console.log(typeof mediaType);
   }
   return (
     <>
-      <div style={{width: "80%", margin: "0 auto"}}>
+      <div style={{ width: "80%", margin: "0 auto" }}>
         <Row>
           <Col className="col-1 p-0">
             <div
@@ -66,7 +70,7 @@ console.log(typeof mediaType);
               </div>
             </div>
           </Col>
-          <Col className="d-flex " style={{border: "3px solid red"}}>
+          <Col className="d-flex " style={{ border: "3px solid red" }}>
             <div
               className="shadow-lg mx-auto"
               style={{
@@ -95,7 +99,6 @@ console.log(typeof mediaType);
                     videoId={movieData.videos.results[0].key}
                     opts={opts}
                     onReady={onReady}
-                    
                   />
                 ) : (
                   <YouTube
@@ -108,7 +111,12 @@ console.log(typeof mediaType);
             </Row>
             <Row>
               <div>
-                <p>Title: {movieData.original_title}</p>
+                <p>
+                  Title:{" "}
+                  {mediaType === "movie"
+                    ? movieData.original_title
+                    : movieData.name}
+                </p>
 
                 <p>
                   Genre:{" "}
@@ -117,12 +125,18 @@ console.log(typeof mediaType);
                   ))}
                 </p>
                 <p>Plot: {movieData.overview}</p>
-                <p>
-                  Year:{" "}
-                  {movieData.release_date !== undefined
-                    ? movieData.release_date.split("-")[0]
-                    : "-"}
-                </p>
+                {
+                  <p>
+                    Year:{" "}
+                    {movieData === undefined
+                      ? "-"
+                      : movieData.release_date === undefined
+                      ? movieData.first_air_date === undefined
+                        ? "-"
+                        : movieData.first_air_date.split("-")[0]
+                      : movieData.release_date.split("-")[0]}
+                  </p>
+                }
                 <p>WebSite: {movieData.homepage}</p>
                 <p>
                   Spoken Languages:{" "}

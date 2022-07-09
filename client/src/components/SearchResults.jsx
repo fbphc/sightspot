@@ -20,7 +20,10 @@ function SearchResults() {
           {resultSearch.map((item, idx) => {
             if (item.media_type !== "person") {
               return (
-                <Link to={`/search_Results/${item.media_type}&${item.id}`} className="mb-3 text-dark">
+                <Link
+                  to={`/search_Results/${item.media_type}&${item.id}`}
+                  className="mb-3 text-dark"
+                >
                   <div
                     key={idx + ""}
                     style={{
@@ -75,11 +78,12 @@ function SearchResults() {
                           <b>
                             {item.release_date === undefined ||
                             item.release_date === ""
-                              ? "-"
+                              ? item.first_air_date === undefined
+                                ? "-"
+                                : item.first_air_date.split("-")[0]
                               : item.release_date.split("-")[0]}
                           </b>
                         </p>
-                        
                       </div>
                     </motion.div>
                   </div>

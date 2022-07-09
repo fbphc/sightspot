@@ -41,9 +41,18 @@ function getSearchMovie(req, res) {
 function getMovieContent(req, res) {
    axios
     .get(
-      `https://api.themoviedb.org/3/movie/${req.params.movieId}?api_key=${process.env.TMDB_KEY}&language=en-US&append_to_response=videos`
+      `https://api.themoviedb.org/3/movie/${req.params.contentId}?api_key=${process.env.TMDB_KEY}&language=en-US&append_to_response=videos`
     )
     .then((searchResults) => res.json(searchResults.data))
     .catch((err) => console.log(err));
 }
-export { getTopTv, getTopMovies, getUpcoming, getSearchMovie, getMovieContent };
+
+function getTvContent(req, res) {
+  axios
+   .get(
+     `https://api.themoviedb.org/3/tv/${req.params.contentId}?api_key=${process.env.TMDB_KEY}&language=en-US&append_to_response=videos`
+   )
+   .then((searchResults) => res.json(searchResults.data))
+   .catch((err) => console.log(err));
+}
+export { getTvContent, getTopTv, getTopMovies, getUpcoming, getSearchMovie, getMovieContent };

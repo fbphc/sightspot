@@ -14,7 +14,6 @@ function Upcoming() {
       <div className="mx-auto d-flex flex-wrap justify-content-center">
         {
           fetchedData.map((item) => {
-            console.log(item.original_title);
             return (
               <div onClick={()=>{
                 setSearchInput({ title: item.original_title })

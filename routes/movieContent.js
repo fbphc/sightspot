@@ -4,8 +4,8 @@ import { getMovieContent } from "../controllers/controllers.js";
 
 dotenv.config({ path: "../.env" });
 
-const contentRouter = Router();
+const contentMovieRouter = Router();
 
-contentRouter.get("/:movieId", getMovieContent)
+contentMovieRouter.get("/:contentId", getMovieContent)
 
-export default contentRouter;
+export default contentMovieRouter;
