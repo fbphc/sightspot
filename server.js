@@ -1,10 +1,13 @@
 import express from "express";
 import cors from "cors";
 import "dotenv/config";
-import searchRouter from "./routes/searchResults.js";
+import searchMovieRouter from "./routes/searchMovie.js";
+
+
 import contentRouter from "./routes/movieContent.js";
 import upcomingRouter from "./routes/upcomingList.js";
-import topRatedRouter from "./routes/topRated.js";
+import topMoviesRouter from "./routes/topRatedMovies.js";
+import topTvRouter from "./routes/topRatedTv.js";
 
 
 
@@ -18,11 +21,14 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors());
-app.use("/search", searchRouter);
-app.use("/movieContent", contentRouter);
+app.use("/search/", searchMovieRouter);
+
+app.use("/movie", contentRouter);
 
 app.use("/home", upcomingRouter);
-app.use("/home/top/", topRatedRouter);
+app.use("/home/top/movie", topMoviesRouter);
+app.use("/home/top/tv", topTvRouter);
+
 
 
 

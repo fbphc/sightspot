@@ -7,7 +7,7 @@ function Provider({ children }) {
   const [searchInput, setSearchInput] = useState({});
   const [fetchedData, setFetchedData] = useState([]);
   const [resultSearch, setResultSearch] = useState([]);
-  
+
   const IMG_URL = "https://image.tmdb.org/t/p/w1280";
 
   useEffect(() => {
@@ -20,8 +20,7 @@ function Provider({ children }) {
   
 
   useEffect(() => {
-    //const path = searchInput.year ===  "" ? `/search/${searchInput.title}&all` : `/search/${searchInput.title}&${searchInput.year}`;
-    const path = `/search/${searchInput.titleMovie}&all`;
+    const path = `/search/${searchInput.title}`;
 
     axios
       .get(path)
@@ -37,7 +36,7 @@ function Provider({ children }) {
         fetchedData,
         IMG_URL,
         resultSearch,
-        setResultSearch,
+        setResultSearch
       }}
     >
       {children}

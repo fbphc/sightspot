@@ -20,7 +20,7 @@ function SearchResults() {
           {resultSearch.map((item, idx) => {
             if (item.media_type !== "person") {
               return (
-                <Link to={`/search_Results/${item.id}`} className="mb-3 text-dark"> 
+                <Link to={`/search_Results/${item.media_type}&${item.id}`} className="mb-3 text-dark">
                   <div
                     key={idx + ""}
                     style={{

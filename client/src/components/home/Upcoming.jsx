@@ -4,7 +4,7 @@ import { Context } from "../../context/Context";
 import { useNavigate } from "react-router-dom";
 
 
-function TopRated() {
+function Upcoming() {
   const { fetchedData, setSearchInput, IMG_URL } = useContext(Context);
 
   const navigate = useNavigate();
@@ -14,9 +14,10 @@ function TopRated() {
       <div className="mx-auto d-flex flex-wrap justify-content-center">
         {
           fetchedData.map((item) => {
+            console.log(item.original_title);
             return (
               <div onClick={()=>{
-                setSearchInput({ titleMovie: item.title })
+                setSearchInput({ title: item.original_title })
                 navigate("/search_Results");
               }}
                 key={item.id}
@@ -74,4 +75,4 @@ function TopRated() {
   );
 }
 
-export default TopRated;
+export default Upcoming;

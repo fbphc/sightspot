@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 import axios from "axios";
 import { Context } from "../context/Context";
 import YouTube from "react-youtube";
@@ -18,11 +18,12 @@ function Result() {
   const [movieData, setMovieData] = useState(inState);
 
   const params = useParams();
-  const movieId = params.name;
-
+  const movieId = params.name.split("&")[1];
+  const mediaType = params.name.split("&")[0];
+console.log(typeof mediaType);
   useEffect(() => {
     axios
-      .get(`/movieContent/${movieId}`)
+      .get(`/${mediaType}/${movieId}`)
       .then((searchResults) => setMovieData(searchResults.data))
       .catch((err) => console.log(err));
   }, [movieId]);

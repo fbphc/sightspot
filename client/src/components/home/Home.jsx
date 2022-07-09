@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
-import Spinner from "./Spinner";
-import { Context } from "../context/Context";
-import TopRated from "./home/Upcoming";
+import Spinner from "../Spinner";
+import { Context } from "../../context/Context";
+import Upcoming from "./Upcoming";
 
 function Home() {
   const { fetchedData } = useContext(Context);
@@ -14,7 +14,7 @@ function Home() {
     );
   } else {
     return (
-      <TopRated />
+      <Upcoming />
     );
   } 
 }

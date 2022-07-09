@@ -2,11 +2,16 @@ import React, { useState, useContext } from "react";
 import { Context } from "../context/Context";
 import { useNavigate, Link } from "react-router-dom";
 
-import { Row, Col, InputGroup, FormControl, Button } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  InputGroup,
+  FormControl,
+  Button,
+} from "react-bootstrap";
 
 function Inputs() {
   const [titleText, setTitleText] = useState("");
-
   const { setSearchInput } = useContext(Context);
   const navigate = useNavigate();
 
@@ -16,7 +21,7 @@ function Inputs() {
     if (titleText === "") {
       window.alert("Please insert a valid title");
     } else {
-      setSearchInput({ titleMovie: titleText.toLowerCase() });
+      setSearchInput({ title: titleText.toLowerCase() });
       navigate("/search_Results");
     }
   }
@@ -61,7 +66,7 @@ function Inputs() {
               >
                 Search
               </Button>
-              
+
               <Button
                 className="mx-5 w-25"
                 variant="outline-secondary"

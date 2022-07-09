@@ -2,7 +2,7 @@ import { Provider } from "./context/Context";
 import "./App.css";
 import Nav from "./components/Navbar";
 import { Route, Routes } from "react-router-dom";
-import Home from "./components/Home";
+import Home from "./components/home/Home";
 import Board from "./components/Board";
 import Footer from "./components/Footer";
 import Result from "./components/Result";
