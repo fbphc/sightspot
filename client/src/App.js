@@ -1,17 +1,17 @@
 import { Provider } from "./context/Context";
 import "./App.css";
-import Nav from "./components/Navbar";
+import Nav from "./components/layout/Navbar";
 import { Route, Routes } from "react-router-dom";
 import Home from "./components/home/Home";
 import Board from "./components/Board";
-import Footer from "./components/Footer";
+import Footer from "./components/layout/Footer";
 import Result from "./components/Result";
 import SearchResults from "./components/SearchResults";
 import TopMovies from "./components/home/TopMovies"
 import TopSeries from "./components/home/TopSeries"
 
-import ImgCarousel from './components/Carousel'
-import Inputs from "./components/Inputs";
+import ImgCarousel from './components/layout/Carousel'
+import Inputs from "./components/layout/Inputs";
 
 function App() {
   return (

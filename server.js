@@ -5,6 +5,8 @@ import searchMovieRouter from "./routes/searchMovie.js";
 
 
 import contentMovieRouter from "./routes/movieContent.js";
+import contentMovieSRouter from "./routes/movieSContent.js";
+
 import contentTvRouter from "./routes/tvContent.js";
 
 import upcomingRouter from "./routes/upcomingList.js";
@@ -27,6 +29,9 @@ app.use("/search/", searchMovieRouter);
 
 app.use("/movie", contentMovieRouter);
 app.use("/tv", contentTvRouter);
+
+app.use("/movieS", contentMovieSRouter);
+
 
 app.use("/home", upcomingRouter);
 app.use("/home/top/movie", topMoviesRouter);

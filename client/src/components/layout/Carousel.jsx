@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
 import { Carousel } from "react-bootstrap";
-import { Context } from "../context/Context";
-import logo from "../img/logo_transparent.png"
+import { Context } from "../../context/Context";
+import logo from "../../img/logo_transparent.png"
+
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 

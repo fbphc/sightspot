@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { motion } from "framer-motion";
-import { Context } from "../context/Context";
 import { Link } from "react-router-dom";
+import { Context } from "../context/Context";
 import NotFound from "./NotFound";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";

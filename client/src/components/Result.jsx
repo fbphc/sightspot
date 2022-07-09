@@ -5,6 +5,7 @@ import axios from "axios";
 import { Context } from "../context/Context";
 import YouTube from "react-youtube";
 import logoSmall from "../img/logo_transparent_small.png";
+import ResultSmilar from "./ResultSmilar";
 
 function Result() {
   const { IMG_URL } = useContext(Context);
@@ -12,29 +13,19 @@ function Result() {
     genres: [],
     spoken_languages: [],
     videos: {
-      results: [
-        { key: "", name: "", realeas_date: "0-0-0", first_air_date: "0-0-0" },
-      ],
+      results: [{ key: "", name: "" }],
     },
   };
 
   const navigate = useNavigate();
   const [movieData, setMovieData] = useState(inState);
-
+  const [trailer, setTrailer] = useState("");
+  const [styleYou, setStyleYou] = useState();
   const params = useParams();
-  const mediaType = params.name.split("&")[0];
-  const contentId = params.name.split("&")[1];
-
-  useEffect(() => {
-    axios
-      .get(`/${mediaType}/${contentId}`)
-      .then((searchResults) => setMovieData(searchResults.data))
-      .catch((err) => console.log(err));
-  }, [contentId, mediaType]);
-
-  const trailer = movieData.videos.results.find(
-    (item) => item.name === "Official Trailer"
-  );
+  const contentParams = {
+    mediaType: params.name.split("&")[0],
+    contentId: params.name.split("&")[1],
+  };
 
   const opts = {
     height: "390",
@@ -43,12 +34,72 @@ function Result() {
       autoplay: 0,
     },
   };
+  const style = {justifyContent: "center",
+  alignItem: "center",
+  flexDirection: "column",
+  zIndex: 10,
+  position: "absolute",
+  left: "50%",
+  transform: "translate(-50%, -10%)",
+  padding: "2rem",
+  backgroundColor: "#8ab6f481",}
+
+  useEffect(() => {
+    axios
+      .get(`/${contentParams.mediaType}/${contentParams.contentId}`)
+      .then((searchResults) => setMovieData(searchResults.data))
+      .catch((err) => console.log(err));
+  }, [contentParams.contentId, contentParams.mediaType]);
+
+  
   function onReady(event) {
-    // access to player in all event handlers via event.target
     event.target.pauseVideo();
   }
+
+  useEffect(() => {
+    setStyleYou({ display: "none" });
+  }, [contentParams.contentId]);
+
+  function handleToggleYoutube() {
+    setStyleYou({...style,
+      display: "flex",
+      
+    });
+    setTrailer(
+      movieData.videos.results.find((item) => item.name === "Official Trailer")
+    );
+  }
+  /*   toggleYoutube ? setStyleYou({ display: "none"}) */
   return (
     <>
+      <div style={styleYou}>
+        <Button onClick={() => setStyleYou({ display: "none" })}>X</Button>
+        {trailer === undefined ? (
+          <YouTube
+            className="mx-auto"
+            videoId={movieData.videos.results[0].key}
+            opts={opts}
+            onReady={onReady}
+          />
+        ) : (
+          <YouTube
+            className="mx-auto"
+            videoId={trailer.key}
+            opts={opts}
+            onReady={onReady}
+          />
+        )}
+        <p className="h5 text-center">
+          {contentParams.mediaType === "movie"
+            ? movieData.original_title
+            : movieData.name}
+        </p>
+        {movieData.tagline ? (
+          <p className="h6 text-center">- {movieData.tagline} -</p>
+        ) : (
+          ""
+        )}
+      </div>
       <div style={{ width: "80%", margin: "0 auto" }}>
         <Row>
           <Col className="col-1 p-0">
@@ -70,7 +121,10 @@ function Result() {
               </div>
             </div>
           </Col>
-          <Col className="d-flex " style={{ border: "3px solid red" }}>
+          <Col
+            className="d-flex flex-column"
+            style={{ border: "3px solid red" }}
+          >
             <div
               className="shadow-lg mx-auto"
               style={{
@@ -93,27 +147,13 @@ function Result() {
                   overflow: "hidden",
                   maxWidth: "max-content",
                 }}
-              >
-                {trailer === undefined ? (
-                  <YouTube
-                    videoId={movieData.videos.results[0].key}
-                    opts={opts}
-                    onReady={onReady}
-                  />
-                ) : (
-                  <YouTube
-                    videoId={trailer.key}
-                    opts={opts}
-                    onReady={onReady}
-                  />
-                )}
-              </div>
+              ></div>
             </Row>
             <Row>
               <div>
                 <p>
                   Title:{" "}
-                  {mediaType === "movie"
+                  {contentParams.mediaType === "movie"
                     ? movieData.original_title
                     : movieData.name}
                 </p>
@@ -144,6 +184,13 @@ function Result() {
                     <span key={idx + "laspoken"}>{item.name} </span>
                   ))}
                 </p>
+
+                <Button
+                  variant="outline-secondary"
+                  onClick={handleToggleYoutube}
+                >
+                  Watch the trailer
+                </Button>
               </div>
             </Row>
           </Col>
@@ -174,7 +221,7 @@ function Result() {
           </Col>
         </Row>
       </div>
-
+      <ResultSmilar contentParams={contentParams} />
       <Button
         className="mx-auto d-block m-2 w-25"
         variant="outline-secondary"

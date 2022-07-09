@@ -8,7 +8,7 @@ import axios from "axios";
 /**---MOVIES----------------------------- */
 
 function TopRated() {
-  const {  setSearchInput, IMG_URL, topSelector } = useContext(Context);
+  const {  setSearchInput, IMG_URL} = useContext(Context);
   const [fetchedTop, setFetchedTop] = useState([])
   const navigate = useNavigate();
 
@@ -27,7 +27,6 @@ function TopRated() {
       <div className="mx-auto d-flex flex-wrap justify-content-center">
         {
           fetchedTop.map((item) => {
-            console.log(item.original_title);
             return (
               <div onClick={()=>{
                 setSearchInput({ title: item.original_title })
