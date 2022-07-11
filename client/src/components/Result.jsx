@@ -8,7 +8,7 @@ import logoSmall from "../img/logo_transparent_small.png";
 import ResultSmilar from "./ResultSmilar";
 
 function Result() {
-  const { IMG_URL } = useContext(Context);
+  const { IMG_URL, idHome } = useContext(Context);
   const inState = {
     genres: [],
     spoken_languages: [],
@@ -34,15 +34,15 @@ function Result() {
       autoplay: 0,
     },
   };
-  const style = {justifyContent: "center",
-  alignItem: "center",
-  flexDirection: "column",
-  zIndex: 10,
-  position: "absolute",
-  left: "50%",
-  transform: "translate(-50%, -10%)",
-  padding: "2rem",
-  backgroundColor: "#8ab6f481",}
+  const style = {
+    justifyContent: "center",
+    alignItem: "center",
+    flexDirection: "column",
+    zIndex: 10,
+    position: "absolute",
+    left: "50%",
+    transform: "translate(-50%, -10%)",
+  };
 
   useEffect(() => {
     axios
@@ -51,7 +51,6 @@ function Result() {
       .catch((err) => console.log(err));
   }, [contentParams.contentId, contentParams.mediaType]);
 
-  
   function onReady(event) {
     event.target.pauseVideo();
   }
@@ -61,10 +60,7 @@ function Result() {
   }, [contentParams.contentId]);
 
   function handleToggleYoutube() {
-    setStyleYou({...style,
-      display: "flex",
-      
-    });
+    setStyleYou({ ...style, display: "flex" });
     setTrailer(
       movieData.videos.results.find((item) => item.name === "Official Trailer")
     );
@@ -73,7 +69,12 @@ function Result() {
   return (
     <>
       <div style={styleYou}>
-        <Button onClick={() => setStyleYou({ display: "none" })}>X</Button>
+        <Button
+          variant="outline-secondary"
+          onClick={() => setStyleYou({ display: "none" })}
+        >
+          X
+        </Button>
         {trailer === undefined ? (
           <YouTube
             className="mx-auto"
@@ -121,15 +122,13 @@ function Result() {
               </div>
             </div>
           </Col>
-          <Col
-            className="d-flex flex-column"
-            style={{ border: "3px solid red" }}
-          >
+          <Col className="d-flex flex-column">
             <div
               className="shadow-lg mx-auto"
               style={{
-                width: "24rem",
-                height: "36rem",
+                width: "20rem",
+                height: "32rem",
+                borderRadius: "1rem",
                 background: `url(${
                   movieData.Poster !== "N/A"
                     ? IMG_URL + movieData.poster_path
@@ -168,7 +167,8 @@ function Result() {
                 {
                   <p>
                     Year:{" "}
-                    {movieData === undefined
+                    {movieData === undefined ||
+                    movieData.videos.results.length === 0
                       ? "-"
                       : movieData.release_date === undefined
                       ? movieData.first_air_date === undefined
@@ -184,13 +184,18 @@ function Result() {
                     <span key={idx + "laspoken"}>{item.name} </span>
                   ))}
                 </p>
-
-                <Button
-                  variant="outline-secondary"
-                  onClick={handleToggleYoutube}
-                >
-                  Watch the trailer
-                </Button>
+                {movieData.videos.results.length === 0 ? (
+                  <Button variant="outline-secondary" disabled>
+                    Trailer not avaiable
+                  </Button>
+                ) : (
+                  <Button
+                    variant="outline-secondary"
+                    onClick={handleToggleYoutube}
+                  >
+                    Watch the trailer
+                  </Button>
+                )}
               </div>
             </Row>
           </Col>

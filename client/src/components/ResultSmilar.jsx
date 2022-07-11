@@ -13,7 +13,6 @@ function ResultSmilar({ contentParams }) {
 
   useEffect(() => {
     axios
-      //.get(`/${contentParams.mediaType}/${contentParams.contentId}`)
       .get(`/${contentParams.mediaType}S/${contentParams.contentId}`)
 
       .then((searchResults) => setSimilar(searchResults.data))
@@ -22,7 +21,7 @@ function ResultSmilar({ contentParams }) {
 
   return (
     <div className="container">
-      <Carousel cols={3} rows={1} gap={10} loop>
+      <Carousel cols={4} rows={1} gap={10} loop className="rounded">
         {similar.results.map((item, idx) => {
           return (
             <Carousel.Item key={idx + "simResult"}>
@@ -34,8 +33,8 @@ function ResultSmilar({ contentParams }) {
                 <div
                   key={idx + ""}
                   style={{
-                    width: "14rem",
-                    height: "20rem",
+                    width: "12rem",
+                    height: "18rem",
                     position: "relative",
                     background: `url(${
                       item.poster_path === null ||

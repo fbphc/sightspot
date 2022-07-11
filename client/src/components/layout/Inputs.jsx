@@ -2,13 +2,7 @@ import React, { useState, useContext } from "react";
 import { Context } from "../../context/Context";
 import { useNavigate, Link } from "react-router-dom";
 
-import {
-  Row,
-  Col,
-  InputGroup,
-  FormControl,
-  Button,
-} from "react-bootstrap";
+import { Row, Col, InputGroup, FormControl, Button } from "react-bootstrap";
 
 function Inputs() {
   const [titleText, setTitleText] = useState("");
@@ -26,22 +20,14 @@ function Inputs() {
     }
   }
 
-  function resetInputs() {
-    setTitleText("");
-  }
 
   return (
-    <div className="my-3 container r text-center shadow-lg p-3 mb-5 bg-white rounded">
+    <div
+      className="my-3 container bg-white text-center shadow-lg p-3 mb-5"
+    >
       <form className="w-100" onSubmit={handleInputs}>
         <Row className="my-0">
-          <Col className="d-flex justify-content-center align-items-center">
-            <Link to="/top_Movies" className="text-dark h5 mx-5 w-25">
-              | Top Rated Movies|
-            </Link>
-            <Link to="/top_Series" className="text-dark h5 mx-5 w-25">
-              | Top Rated Series|
-            </Link>
-          </Col>
+          <Col className="d-flex justify-content-center align-items-center"></Col>
         </Row>
         <Row>
           <Col>
@@ -58,6 +44,9 @@ function Inputs() {
           </Col>
           <Row>
             <Col className="d-flex justify-content-center">
+              <Link to="/top_Movies" className="text-dark h5 mx-5 w-25">
+                | Top Rated Movies|
+              </Link>
               <Button
                 className="mx-5 w-25"
                 type="submit"
@@ -67,13 +56,9 @@ function Inputs() {
                 Search
               </Button>
 
-              <Button
-                className="mx-5 w-25"
-                variant="outline-secondary"
-                onClick={resetInputs}
-              >
-                Reset
-              </Button>
+              <Link to="/top_Series" className="text-dark h5 mx-5 w-25">
+                | Top Rated Series|
+              </Link>
             </Col>
           </Row>
         </Row>

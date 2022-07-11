@@ -1,5 +1,7 @@
 import React, { useContext } from "react";
 import { Carousel } from "react-bootstrap";
+//import Carousel from "better-react-carousel";
+
 import { Context } from "../../context/Context";
 import logo from "../../img/logo_transparent.png"
 
@@ -14,34 +16,33 @@ function ImgCarousel() {
   const navigate = useNavigate();
 
   return (
-    <div className="d-flex position-relative">
+    <div className="d-flex position-relative align-items-center ">
       <div className="w100 position-absolute my-auto" style={{top: "50%", transform: "translateY(-50%)", backgroundColor: "#8AB7F4", width:"100%",height:"3rem"}}></div>
-    <Carousel className="w-50" variant="dark">
+    <Carousel className= "w-50" variant="dark">
       {fetchedData.map((item, idx) => {
-        if (idx > 10 && idx < 16) {
+       if(idx < 6){
           return (
             <Carousel.Item key={idx + ""}>
-              <div className="w-100 p-3 mx-auto justify-content-center d-flex">
+              <div className="w-100 mt-3 p-3 mx-auto justify-content-center d-flex">
                 <motion.div whileHover={{scale: 0.95, opacity: 0.9, cursor: "pointer"}} onClick={()=>{
-                setSearchInput({ titleMovie: item.title, year: item.year })
+                setSearchInput({ title: item.title})
                 navigate("/search_Results");
               }}>
                   <img
                     className="d-block border border-white mx-auto"
-                    src={IMG_URL + item.poster_path}
+                    src={IMG_URL + item.backdrop_path}
                     alt="Second slide"
                     style={{
-                      height: "23rem", borderRadius: "0.8rem"
+                      borderRadius: "0.8rem", width: "60%"
                     }}
-                  />
-                  <p className="text-center m-0 lead"><b>{item.title}</b></p>
-                  <p className="text-center m-0 lead"><b>{item.release_date.split("-")[0]}</b></p>
+                  />                 
+                    <p className="h5 text-center mb-5">{item.title} - <span>{item.release_date.split("-")[0]}</span></p>
                 </motion.div>
               </div>
             </Carousel.Item>
           );
         }
-      })}
+})}
     </Carousel>
     <div className="w-50">
 <div  className="d-flex justify-content-center align-items-center" style={{clipPath: "polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%)", backgroundColor: "#8AB7F4", width:"100%",height:"30rem"}}>{/* maxHeight:"30rem", minHeight: "18rem" */}
