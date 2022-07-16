@@ -8,7 +8,8 @@ import logoSmall from "../img/logo_transparent_small.png";
 import ResultSmilar from "./ResultSmilar";
 
 function Result() {
-  const { IMG_URL, idHome } = useContext(Context);
+  const { IMG_URL } = useContext(Context);
+
   const inState = {
     genres: [],
     spoken_languages: [],
@@ -21,19 +22,21 @@ function Result() {
   const [movieData, setMovieData] = useState(inState);
   const [trailer, setTrailer] = useState("");
   const [styleYou, setStyleYou] = useState();
+
   const params = useParams();
   const contentParams = {
     mediaType: params.name.split("&")[0],
     contentId: params.name.split("&")[1],
   };
-
+ 
   const opts = {
     height: "390",
     width: "640",
     playerVars: {
-      autoplay: 0,
+      autoplay: 1,
     },
   };
+
   const style = {
     justifyContent: "center",
     alignItem: "center",
@@ -51,8 +54,8 @@ function Result() {
       .catch((err) => console.log(err));
   }, [contentParams.contentId, contentParams.mediaType]);
 
-  function onReady(event) {
-    event.target.pauseVideo();
+  function onReady(e) {
+    e.target.pauseVideo();
   }
 
   useEffect(() => {
@@ -65,7 +68,7 @@ function Result() {
       movieData.videos.results.find((item) => item.name === "Official Trailer")
     );
   }
-  /*   toggleYoutube ? setStyleYou({ display: "none"}) */
+
   return (
     <>
       <div style={styleYou}>
@@ -167,8 +170,7 @@ function Result() {
                 {
                   <p>
                     Year:{" "}
-                    {movieData === undefined ||
-                    movieData.videos.results.length === 0
+                    {movieData === undefined
                       ? "-"
                       : movieData.release_date === undefined
                       ? movieData.first_air_date === undefined

@@ -6,10 +6,12 @@ import NotFound from "./NotFound";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
+
+
 function SearchResults() {
   const { resultSearch, IMG_URL } = useContext(Context);
+  console.log(resultSearch);
   const navigate = useNavigate();
-
   if (resultSearch.length === 0) {
     return <NotFound />;
   } else {

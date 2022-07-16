@@ -26,6 +26,12 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors());
+
+
+app.use("/home", upcomingRouter);
+app.use("/home/top/movie", topMoviesRouter);
+app.use("/home/top/tv", topTvRouter);
+
 app.use("/search/", searchMovieRouter);
 
 app.use("/movie", contentMovieRouter);
@@ -34,10 +40,6 @@ app.use("/tv", contentTvRouter);
 app.use("/movieS", contentMovieSRouter);
 app.use("/tvS", contentTvSRouter);
 
-
-app.use("/home", upcomingRouter);
-app.use("/home/top/movie", topMoviesRouter);
-app.use("/home/top/tv", topTvRouter);
 
 
 

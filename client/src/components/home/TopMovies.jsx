@@ -29,7 +29,7 @@ function TopRated() {
           fetchedTop.map((item) => {
             return (
               <div onClick={()=>{
-                setSearchInput({ title: item.original_title })
+                setSearchInput({ title: item.title })
                 navigate("/search_Results");
               }}
                 key={item.id}
