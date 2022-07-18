@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { Navbar, Button, Offcanvas } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import logo from "../../img/logo_transparent.png";
-import { FaAngleDoubleUp, FaFilm, FaTv, FaUserAlt, FaBars } from "react-icons/fa";
+import { FaAngleDoubleUp, FaFilm, FaTv, FaBars } from "react-icons/fa";
+import SignUp from "../auth/SignUp";
+import Login from "../auth/Login";
+import logoSmall from "../../img/logo_transparent_small_black.png"
 
 function Nav() {
   const [show, setShow] = useState(false);
@@ -34,15 +37,10 @@ function Nav() {
       <Offcanvas show={show} onHide={handleClose} placement="end">
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>
-            <Link
-              className="text-uppercase d-flex my-1"
-              to="/"
-              onClick={() => setShow(false)}
-              style={offlinkStyle}
-            >
-              <FaUserAlt className="mx-2 h3" />
-              <h4>{/* Log-in */}</h4>
-            </Link>
+            <div className="w-25">
+              <img src={logoSmall} alt="sightspot logo" className="w-100"/>
+            </div>
+           
           </Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body className="d-flex flex-column text-uppercase bg-light">
@@ -79,6 +77,8 @@ function Nav() {
               <h4>Top Rated Series</h4>
             </Link>
           </div>
+          <SignUp />
+          <Login/>
         </Offcanvas.Body>
       </Offcanvas>
     </Navbar>

@@ -1,6 +1,6 @@
 import {Router} from "express"
 import dotenv from "dotenv";
-import { getMovieContent } from "../controllers/controllers.js";
+import { getMovieContent } from "../../controllers/controllers.js";
 
 dotenv.config({ path: "../.env" });
 

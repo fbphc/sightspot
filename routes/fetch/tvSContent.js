@@ -1,6 +1,6 @@
 import {Router} from "express"
 import dotenv from "dotenv";
-import { getTvSContent } from "../controllers/controllers.js";
+import { getTvSContent } from "../../controllers/controllers.js";
 
 dotenv.config({ path: "../.env" });
 

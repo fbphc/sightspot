@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getTopTv } from "../controllers/controllers.js";
+import { getTopTv } from "../../controllers/controllers.js";
 
 
 const topMoviesTv = Router();

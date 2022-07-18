@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getUpcoming } from "../controllers/controllers.js";
+import { getUpcoming } from "../../controllers/controllers.js";
 
 
 const upcomingRouter = Router();
