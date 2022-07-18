@@ -28,7 +28,7 @@ function Result() {
     mediaType: params.name.split("&")[0],
     contentId: params.name.split("&")[1],
   };
- 
+
   const opts = {
     height: "390",
     width: "640",
@@ -76,8 +76,9 @@ function Result() {
           variant="outline-secondary"
           onClick={() => setStyleYou({ display: "none" })}
         >
-          X
+          <span aria-hidden="true">&times;</span>
         </Button>
+
         {trailer === undefined ? (
           <YouTube
             className="mx-auto"

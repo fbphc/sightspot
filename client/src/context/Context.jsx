@@ -17,8 +17,6 @@ function Provider({ children }) {
       .catch((err) => console.log(err));
   }, []);
 
-  
-
   useEffect(() => {
     const path = `/search/${searchInput.title}`;
 
@@ -36,7 +34,7 @@ function Provider({ children }) {
         fetchedData,
         IMG_URL,
         resultSearch,
-        setResultSearch
+        setResultSearch,
       }}
     >
       {children}
