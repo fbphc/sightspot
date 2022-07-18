@@ -1,19 +1,31 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Context } from "../context/Context";
-import NotFound from "./NotFound";
+import Spinner from "./Spinner";
 import { Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 
 function SearchResults() {
-  const { resultSearch, IMG_URL } = useContext(Context);
-  console.log(resultSearch);
+  const { IMG_URL } = useContext(Context);
+
+  const [resultSearch, setResultSearch] = useState([])
+  
+  const params = useParams();
+
+  useEffect(() => {
+    const path = `/search/${params.title}`;
+     axios
+     .get(path)
+      .then((searchResults) => setResultSearch(searchResults.data.results))
+      .catch((err) => console.log(err));
+    }, [params]);
+
   const navigate = useNavigate();
   if (resultSearch.length === 0) {
-    return <NotFound />;
+    return <Spinner />;
   } else {
     return (
       <>
@@ -25,9 +37,9 @@ function SearchResults() {
                 <Link
                   to={`/search_Results/${item.media_type}&${item.id}`}
                   className="mb-3 text-dark"
+                  key={idx + ""}
                 >
                   <div
-                    key={idx + ""}
                     style={{
                       width: "14rem",
                       height: "20rem",

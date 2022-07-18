@@ -16,8 +16,8 @@ function Upcoming() {
           fetchedData.map((item) => {
             return (
               <div onClick={()=>{
-                setSearchInput({ title: item.title })
-                navigate("/search_Results");
+                navigate(`/search_Results/search/${item.title}`);
+
               }}
                 key={item.id}
                 style={{

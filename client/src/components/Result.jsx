@@ -3,9 +3,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Row, Col, Button } from "react-bootstrap";
 import axios from "axios";
 import { Context } from "../context/Context";
-import YouTube from "react-youtube";
 import logoSmall from "../img/logo_transparent_small.png";
 import ResultSmilar from "./ResultSmilar";
+import YouComponent from "./YouComponent";
+
+
 
 function Result() {
   const { IMG_URL } = useContext(Context);
@@ -20,8 +22,7 @@ function Result() {
 
   const navigate = useNavigate();
   const [movieData, setMovieData] = useState(inState);
-  const [trailer, setTrailer] = useState("");
-  const [styleYou, setStyleYou] = useState();
+  const [youComponent, setYouComponent] = useState(false);
 
   const params = useParams();
   const contentParams = {
@@ -29,23 +30,6 @@ function Result() {
     contentId: params.name.split("&")[1],
   };
 
-  const opts = {
-    height: "390",
-    width: "640",
-    playerVars: {
-      autoplay: 1,
-    },
-  };
-
-  const style = {
-    justifyContent: "center",
-    alignItem: "center",
-    flexDirection: "column",
-    zIndex: 10,
-    position: "absolute",
-    left: "50%",
-    transform: "translate(-50%, -10%)",
-  };
 
   useEffect(() => {
     axios
@@ -54,46 +38,18 @@ function Result() {
       .catch((err) => console.log(err));
   }, [contentParams.contentId, contentParams.mediaType]);
 
-  function onReady(e) {
-    e.target.pauseVideo();
-  }
-
-  useEffect(() => {
-    setStyleYou({ display: "none" });
-  }, [contentParams.contentId]);
-
+ 
   function handleToggleYoutube() {
-    setStyleYou({ ...style, display: "flex" });
-    setTrailer(
-      movieData.videos.results.find((item) => item.name === "Official Trailer")
-    );
-  }
+    setYouComponent(true);
+  } 
 
   return (
     <>
-      <div style={styleYou}>
-        <Button
-          variant="outline-secondary"
-          onClick={() => setStyleYou({ display: "none" })}
-        >
-          <span aria-hidden="true">&times;</span>
-        </Button>
+      <div>
+        
+        {youComponent ? <YouComponent movieData={movieData} setYouComponent={()=>setYouComponent(false)}/> : null}
 
-        {trailer === undefined ? (
-          <YouTube
-            className="mx-auto"
-            videoId={movieData.videos.results[0].key}
-            opts={opts}
-            onReady={onReady}
-          />
-        ) : (
-          <YouTube
-            className="mx-auto"
-            videoId={trailer.key}
-            opts={opts}
-            onReady={onReady}
-          />
-        )}
+       
         <p className="h5 text-center">
           {contentParams.mediaType === "movie"
             ? movieData.original_title

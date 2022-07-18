@@ -26,8 +26,8 @@ function TopRated() {
           return (
             <div
               onClick={() => {
-                setSearchInput({ title: item.name });
-                navigate("/search_Results");
+                navigate(`/search_Results/search/${item.name}`);
+
               }}
               key={item.id}
               style={{

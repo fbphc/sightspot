@@ -25,8 +25,9 @@ function App() {
           <Route path="/top_Movies" element={<TopMovies />} />
           <Route path="/top_Series" element={<TopSeries />} />
 
-          <Route path="/search_Results" element={<SearchResults />} /> {/* click here */}
           <Route path="/search_Results/:name" element={<Result />} />
+
+          <Route path="/search_Results/search/:title" element={<SearchResults />} />
 
 
           <Route path="/board" element={<Board /> } />

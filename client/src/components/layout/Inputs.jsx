@@ -1,12 +1,11 @@
-import React, { useState, useContext } from "react";
-import { Context } from "../../context/Context";
+import React, { useState } from "react";
 import { useNavigate} from "react-router-dom";
 
 import {InputGroup, FormControl, Button } from "react-bootstrap";
 
 function Inputs() {
   const [titleText, setTitleText] = useState("");
-  const { setSearchInput } = useContext(Context);
+
   const navigate = useNavigate();
 
   function handleInputs(e) {
@@ -15,8 +14,7 @@ function Inputs() {
     if (titleText === "") {
       window.alert("Please insert a valid title");
     } else {
-      setSearchInput({ title: titleText.toLowerCase() });
-      navigate("/search_Results");
+      navigate(`/search_Results/search/${titleText}`);
     }
   }
 

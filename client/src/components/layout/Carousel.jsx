@@ -23,7 +23,7 @@ function ImgCarousel() {
           backgroundColor: "#8AB7F4",
           width: "100%",
           height: "3rem",
-          zIndex: -1
+          zIndex: -1,
         }}
       ></div>
       <Carousel className="w-50" variant="dark">
@@ -39,8 +39,7 @@ function ImgCarousel() {
                       cursor: "pointer",
                     }}
                     onClick={() => {
-                      setSearchInput({ title: item.title });
-                      navigate("/search_Results");
+                      navigate(`/search_Results/search/${item.title}`);
                     }}
                   >
                     <img
@@ -63,7 +62,7 @@ function ImgCarousel() {
       <div className="w-50">
         <div
           className="d-flex justify-content-center align-items-center"
-          style={{ width: "100%"}}
+          style={{ width: "100%" }}
         >
           <img
             src={logo}

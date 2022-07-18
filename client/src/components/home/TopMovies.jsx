@@ -8,7 +8,7 @@ import axios from "axios";
 /**---MOVIES----------------------------- */
 
 function TopRated() {
-  const {  setSearchInput, IMG_URL} = useContext(Context);
+  const { IMG_URL} = useContext(Context);
   const [fetchedTop, setFetchedTop] = useState([])
   const navigate = useNavigate();
 
@@ -29,8 +29,7 @@ function TopRated() {
           fetchedTop.map((item) => {
             return (
               <div onClick={()=>{
-                setSearchInput({ title: item.title })
-                navigate("/search_Results");
+                navigate(`/search_Results/search/${item.title}`);
               }}
                 key={item.id}
                 style={{
