@@ -1,11 +1,11 @@
-/* import UserSightSpot from "../models/UserSightSpot.js";
+import UserSightSpot from "../models/UserSightSpot.js";
 import { validationResult } from "express-validator";
 import generateToken from "../helper/generateToken.js";
 import bcrypt from "bcryptjs";
 
 const registerUser = async (req, res) => {
-  const errors = validationResult(req);
-
+    const errors = validationResult(req);
+    
   if (!errors.isEmpty()) {
     return res.status(400).json({
       errors: errors.array(),
@@ -15,9 +15,10 @@ const registerUser = async (req, res) => {
   const { name, password, email } = req.body;
 
   const user = await UserSightSpot.findByEmail(email);
-  if (user) return res.json({ msg: "sorry e-mail already in the database" });
 
-  const salt = await bcrypt.genSalt();
+  if (user) return res.status(409).json({ msg: "Sorry the e-mail already exists" });
+
+  const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
   const Id = (await UserSightSpot.find()).length + 1;
   const UserSight = await UserSightSpot.create({
@@ -35,7 +36,7 @@ const registerUser = async (req, res) => {
 
   try {
     await UserSight.save();
-    res.status(200).json({ user: UserSight, token });
+    res.status(200).json({ user: UserSight, token, msg: "Thank you for signing up!" });
   } catch (err) {
     res.status(400).json({ errorMessage: err.message });
   }
@@ -43,14 +44,13 @@ const registerUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
     const { email, password } = req.body;
-  
+
     const user = await UserSightSpot.findByEmail(email);
-  
     if (!user)
-      return res.status(404).json({
-        message: `Either email or password is not correct !!!`,
-      });
-  
+    return res.status(404).json({
+      message: `Either email or password is not correct !!!`,
+    });
+    
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
     if (!isPasswordCorrect) {
       return res.status(404).json({
@@ -73,4 +73,4 @@ const loginUser = async (req, res) => {
     res.status(200).json(users);
   };
 
-export { registerUser, loginUser, getAllUsers }; */
+export { registerUser, loginUser, getAllUsers };

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Context } from "../context/Context";
-import Spinner from "./Spinner";
+import NotFound from "./NotFound";
 import { Button } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -25,7 +25,7 @@ function SearchResults() {
 
   const navigate = useNavigate();
   if (resultSearch.length === 0) {
-    return <Spinner />;
+    return <NotFound />;
   } else {
     return (
       <>

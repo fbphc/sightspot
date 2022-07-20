@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { Navbar, Button, Offcanvas } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import logo from "../../img/logo_transparent.png";
 import { FaAngleDoubleUp, FaFilm, FaTv, FaBars } from "react-icons/fa";
 import SignUp from "../auth/SignUp";
 import Login from "../auth/Login";
-import logoSmall from "../../img/logo_transparent_small_black.png"
+import logoSmall from "../../img/logo_transparent_small_black.png";
+import { Context } from "../../context/Context";
 
 function Nav() {
-  const [show, setShow] = useState(false);
+  const { show, setShow } = useContext(Context);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -35,12 +36,11 @@ function Nav() {
         </h3>
       </Button>
       <Offcanvas show={show} onHide={handleClose} placement="end">
-        <Offcanvas.Header closeButton>
-          <Offcanvas.Title>
+        <Offcanvas.Header closeButton style={{backgroundColor: "#89b6f4"}}>
+          <Offcanvas.Title >
             <div className="w-25">
-              <img src={logoSmall} alt="sightspot logo" className="w-100"/>
+              <img src={logoSmall} alt="sightspot logo" className="w-100" />
             </div>
-           
           </Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body className="d-flex flex-column text-uppercase bg-light">
@@ -78,7 +78,7 @@ function Nav() {
             </Link>
           </div>
           <SignUp />
-          <Login/>
+          <Login />
         </Offcanvas.Body>
       </Offcanvas>
     </Navbar>

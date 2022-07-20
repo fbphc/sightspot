@@ -1,7 +1,6 @@
 import { check } from "express-validator";
 
 export const validator = () => {
-  
   return [
     check("name", "Name is required").notEmpty(),
     check("email", "Please include a valid email").isEmail(),

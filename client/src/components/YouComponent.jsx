@@ -8,16 +8,18 @@ function YouComponent({movieData, setYouComponent}) {
     setTrailer(
       movieData.videos.results.find((item) => item.name === "Official Trailer")
     );
+    
   }, []);
 
   function onReady(e) {
     e.target.pauseVideo();
   }
+  
   const opts = {
     height: "390",
     width: "640",
     playerVars: {
-      autoplay: 0,
+      autoplay: 0
     },
   };
   const style = {

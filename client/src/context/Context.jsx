@@ -4,7 +4,7 @@ import axios from "axios";
 const Context = createContext();
 
 function Provider({ children }) {
- 
+  const [show, setShow] = useState(true);
   const [fetchedData, setFetchedData] = useState([]);
 
 
@@ -23,6 +23,7 @@ function Provider({ children }) {
       value={{
         fetchedData,
         IMG_URL,
+        show, setShow
       }}
     >
       {children}

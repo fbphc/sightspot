@@ -48,18 +48,7 @@ function Result() {
       <div>
         
         {youComponent ? <YouComponent movieData={movieData} setYouComponent={()=>setYouComponent(false)}/> : null}
-
        
-        <p className="h5 text-center">
-          {contentParams.mediaType === "movie"
-            ? movieData.original_title
-            : movieData.name}
-        </p>
-        {movieData.tagline ? (
-          <p className="h6 text-center">- {movieData.tagline} -</p>
-        ) : (
-          ""
-        )}
       </div>
       <div style={{ width: "80%", margin: "0 auto" }}>
         <Row>

@@ -14,10 +14,13 @@ const userSSSchema = new mongoose.Schema({
     
   },
   id: {
-    type: Number
+    type: Number,
   },
   password: { type: String, required: true, minLength: 6 },
-
+  createdAt: {
+    type: Date,
+    default: new Date(),
+  },
 });
 userSSSchema.statics.findByEmail = function (email) {
   return this.findOne({ email: email });
