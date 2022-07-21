@@ -48,13 +48,13 @@ const loginUser = async (req, res) => {
     const user = await UserSightSpot.findByEmail(email);
     if (!user)
     return res.status(404).json({
-      message: `Either email or password is not correct !!!`,
+      msg: `Either email or password is not correct !!!`,
     });
     
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
     if (!isPasswordCorrect) {
       return res.status(404).json({
-        message: `Either email or password is not correct !!!`,
+        msg: `Your email or password are not correct !!!`,
       });
     }
   

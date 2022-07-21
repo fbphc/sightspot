@@ -1,8 +1,9 @@
-import React, { useReducer, useContext, useState } from "react";
-import {Form, Button} from "react-bootstrap";
+import React, { useReducer, useContext, useState, useRef } from "react";
+import { Form, Button, Alert } from "react-bootstrap";
 import { FaUserAstronaut } from "react-icons/fa";
 import axios from "axios";
 import { Context } from "../../context/Context";
+import { useForm } from "react-hook-form";
 
 function formReducer(state, action) {
   switch (action.type) {
@@ -13,7 +14,7 @@ function formReducer(state, action) {
       };
     case "DEFAULT":
       return {
-        name: "",
+        username: "",
         email: "",
         password: "",
         confPassword: "",
@@ -25,19 +26,24 @@ function formReducer(state, action) {
 
 function SignUp() {
   const iniStateSignUp = {
-    name: "",
+    username: "",
     email: "",
     password: "",
     confPassword: "",
   };
-  const { setShow } = useContext(Context);
-  const [formState, dispatch] = useReducer(formReducer, iniStateSignUp);
-  const [errorMsg, setErrorMsg] = useState("");
-  const [error, setError] = useState(false);
+  /**-------USEFORM HOOK ------ */
+  const { register, handleSubmit, formState, watch } = useForm();
+  const { errors } = formState;
+  const password = useRef({});
+  password.current = watch("password", "");
+  /**-------------------------- */
+
+  const { show, setShow } = useContext(Context);
+  const [formStateReducer, dispatch] = useReducer(formReducer, iniStateSignUp);
+  const { Group, Label, Control } = { ...Form };
   const [signData, setSignData] = useState({});
 
   function textChange(e) {
-    setError(false);
     dispatch({
       type: "HANDLE_TEXT",
       field: e.target.name,
@@ -45,38 +51,33 @@ function SignUp() {
     });
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    if (formState.password === formState.confPassword && !error) {
-      axios
-        .post(
-          `/user/sign_up`,
-          {
-            name: formState.name,
-            email: formState.email,
-            password: formState.password,
-            confPassword: formState.confPassword,
+  function submit() {
+    axios
+      .post(
+        `/user/sign_up`,
+        {
+          name: formStateReducer.username,
+          email: formStateReducer.email,
+          password: formStateReducer.password,
+          confPassword: formStateReducer.confPassword,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
           },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        )
-        .then((response) => setSignData(response))
-        .catch((err) => {
-          if (err.response) {
-            setError(true);
-            setErrorMsg(err.response.data.msg);
-          }
-        });
-        alert("Thank you for signing up!");
+        }
+      )
+      .then((response) => {
+        setSignData(response);
         setShow(false);
-      } else {
-        setError(true);
-      setErrorMsg("Passwords did not match");
-    }
-    
+        return alert("Thank you for signing up!");
+      })
+      .catch((err) => {
+        if (err.response) return alert(err.response.data.msg);
+      });
+  }
+  function test() {
+    console.log(errors);
   }
 
   return (
@@ -84,60 +85,111 @@ function SignUp() {
       <h4 className="mb-4">
         <FaUserAstronaut /> Sign Up
       </h4>
-      <Form onSubmit={handleSubmit}>
-        <Form.Label htmlFor="name">&gt; Username</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="Name"
-          name="name"
-          aria-describedby="name"
-          className="mb-3"
-          value={formState.name}
-          onChange={(e) => textChange(e)}
-          autoComplete="new-password"
-        />
-        <Form.Label htmlFor="email">&gt; E-mail</Form.Label>
-        <Form.Control
-          type="email"
-          placeholder="name@example.com"
-          name="email"
-          aria-describedby="email"
-          className="mb-3"
-          value={formState.email}
-          onChange={(e) => textChange(e)}
-          autoComplete="new-password"
-        />
-        <Form.Label htmlFor="inputPassword">&gt; Password</Form.Label>
-        <Form.Control
-          placeholder="Password"
-          type="password"
-          name="password"
-          aria-describedby="passwordHelpBlock"
-          className="mb-3"
-          value={formState.password}
-          onChange={(e) => textChange(e)}
-          autoComplete="new-password"
-        />
-        <Form.Label htmlFor="inputConPassword">
-          &gt; Confirm Password
-        </Form.Label>
-        <Form.Control
-          placeholder="Confirm Password"
-          type="password"
-          name="confPassword"
-          aria-describedby="passwordHelpBlock"
-          className="mb-3"
-          value={formState.confPassword}
-          onChange={(e) => textChange(e)}
-          autoComplete="new-password"
-        />
-        {error ? (
-          <p className="text-danger text-lowercase">{errorMsg}</p>
-        ) : null}
+      <Form onSubmit={handleSubmit(submit)} className="simpleForm">
+        <Group>
+          <Label htmlFor="name">&gt; Username</Label>
+          <Control
+            {...register("username", {
+              required: {
+                value: true,
+                message: "You must specify your username",
+              },
+            })}
+            placeholder="Your name"
+            type="text"
+            name="username"
+            aria-describedby="username"
+            className="mb-3"
+            value={formStateReducer.username}
+            onChange={(e) => textChange(e)}
+            autoComplete="new-password"
+          />
+        </Group>
+        <Group>
+          <Label htmlFor="email">&gt; E-mail</Label>
+          <Control
+            {...register("email", {
+              required: {
+                value: true,
+                message: "You need to specify a valid email address",
+              },
 
-        <button variant="outline-secondary" onClick={handleSubmit}>
+              pattern: {
+                value: /^\S+@\S+$/i,
+                message: "The email address is not valid!",
+              },
+            })}
+            type="text"
+            placeholder="name@example.com"
+            name="email"
+            aria-describedby="email"
+            className="mb-3"
+            value={formStateReducer.email}
+            onChange={(e) => textChange(e)}
+            autoComplete="new-password"
+          />
+        </Group>
+        <Group>
+          <Label htmlFor="inputPassword">&gt; Password - min 6 char</Label>
+          <Control
+            {...register("password", {
+              required: {
+                value: true,
+                message: "You need to specify a password",
+              },
+              minLength: {
+                value: 6,
+                message: "Password must have at least 6 characters",
+              },
+            })}
+            placeholder="Password"
+            type="password"
+            name="password"
+            aria-describedby="passwordHelpBlock"
+            className="mb-3"
+            value={formStateReducer.password}
+            onChange={(e) => textChange(e)}
+            autoComplete="new-password"
+          />
+        </Group>
+        <Group>
+          <Label htmlFor="inputConPassword">&gt; Confirm Password</Label>
+          <Control
+            {...register("confPassword", {
+              required: {
+                validate: (value) =>
+                  value === password.current || "The passwords do not match", 
+              },
+            })}
+            placeholder="Confirm Password"
+            type="password"
+            name="confPassword"
+            aria-describedby="passwordHelpBlock"
+            className="mb-3"
+            value={formStateReducer.confPassword}
+            onChange={(e) => textChange(e)}
+            autoComplete="new-password"
+          />
+        </Group>
+        {!formState.isValid && formState.isSubmitted ? (
+          <Alert variant="danger">
+            {Object.values(errors).map((item, idx) => {
+              return (
+                <p className="text-lowercase small" key={idx}>
+                  {item.message}
+                </p>
+              );
+            })}
+          </Alert>
+        ) : (
+          <Alert variant="success text-lowercase small">
+            Please fill in the form
+          </Alert>
+        )}
+
+        <Button type="submit" variant="outline-secondary" onClick={test}>
           Sign Up
-        </button>
+        </Button>
       </Form>
     </div>
   );

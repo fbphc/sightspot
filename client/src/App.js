@@ -14,6 +14,7 @@ import ImgCarousel from './components/layout/Carousel'
 import Inputs from "./components/layout/Inputs";
 
 function App() {
+  
   return (
     <Provider>
       <div className="App">

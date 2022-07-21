@@ -6,7 +6,7 @@ const Context = createContext();
 function Provider({ children }) {
   const [show, setShow] = useState(true);
   const [fetchedData, setFetchedData] = useState([]);
-
+  const [isLogged, setIsLogged] = useState(false);
 
   const IMG_URL = "https://image.tmdb.org/t/p/w1280";
 
@@ -17,13 +17,15 @@ function Provider({ children }) {
       .catch((err) => console.log(err));
   }, []);
 
-
   return (
     <Context.Provider
       value={{
         fetchedData,
         IMG_URL,
-        show, setShow
+        show,
+        setShow,
+        isLogged,
+        setIsLogged,
       }}
     >
       {children}

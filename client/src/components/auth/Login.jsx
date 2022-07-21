@@ -1,8 +1,9 @@
-import React, { useReducer, useContext } from "react";
-import Form from "react-bootstrap/Form";
+import React, { useReducer, useContext, useState, useRef } from "react";
+import { Form, Button, Alert } from "react-bootstrap";
 import { FaSignInAlt } from "react-icons/fa";
 import axios from "axios";
 import { Context } from "../../context/Context";
+import { useForm } from "react-hook-form";
 
 function formReducer(state, action) {
   switch (action.type) {
@@ -22,13 +23,20 @@ function formReducer(state, action) {
 }
 
 function SignUp() {
-  const { setShow } = useContext(Context);
-  
   const iniStateSignUp = {
     email: "",
     password: "",
   };
-  const [formState, dispatch] = useReducer(formReducer, iniStateSignUp);
+  /**-------USEFORM HOOK ------ */
+  const { register, handleSubmit, formState, watch } = useForm();
+  const { errors } = formState;
+  const password = useRef({});
+  password.current = watch("password", "");
+  /**-------------------------- */
+  const { setShow, isLogged, setIsLogged } = useContext(Context);
+  const { Group, Label, Control } = { ...Form };
+  const [formStateReducer, dispatch] = useReducer(formReducer, iniStateSignUp);
+  const [signData, setSignData] = useState({});
 
   function textChange(e) {
     dispatch({
@@ -37,14 +45,13 @@ function SignUp() {
       payload: e.target.value,
     });
   }
-  function handleSubmit(e) {
-    e.preventDefault();
+  function submit() {
     axios
       .post(
         `/user/login`,
         {
-          email: formState.email,
-          password: formState.password,
+          email: formStateReducer.email,
+          password: formStateReducer.password,
         },
         {
           headers: {
@@ -52,10 +59,15 @@ function SignUp() {
           },
         }
       )
-      .then((signData) => console.log(signData))
-      .catch((err) => console.log(err));
-    /* dispatch({ type: "DEFAULT" });
-    setShow(false); */
+      .then((response) => {
+        setSignData(response);
+        setShow(false);
+        setIsLogged(true)
+        return alert("You are logged in!")
+      })
+      .catch((err) => {
+        if (err.response) return alert(err.response.data.msg);
+      });
   }
 
   return (
@@ -64,33 +76,74 @@ function SignUp() {
         <FaSignInAlt /> Log-in
       </h4>
 
-      <form>
-        <Form.Label htmlFor="email">&gt; E-mail</Form.Label>
-        <Form.Control
-          type="email"
-          placeholder="name@example.com"
-          name="email"
-          aria-describedby="email"
-          className="mb-3"
-          value={formState.email}
-          onChange={(e) => textChange(e)}
-          autoComplete="new-password"
-        />
-        <Form.Label htmlFor="inputPassword">&gt; Password</Form.Label>
-        <Form.Control
-          placeholder="Password"
-          type="password"
-          name="password"
-          aria-describedby="passwordHelpBlock"
-          className="mb-3"
-          value={formState.password}
-          onChange={(e) => textChange(e)}
-          autoComplete="new-password"
-        />
-        <button variant="outline-secondary" onClick={handleSubmit}>
+      <Form onSubmit={handleSubmit(submit)} className="simpleForm">
+        <Group>
+          <Label htmlFor="email">&gt; E-mail</Label>
+          {isLogged && <p className="text-success">logged</p>}
+          <Control
+            {...register("email", {
+              required: {
+                value: true,
+                message: "You need to specify a valid email address",
+              },
+
+              pattern: {
+                value: /^\S+@\S+$/i,
+                message: "The email address is not valid!",
+              },
+            })}
+            type="text"
+            placeholder="name@example.com"
+            name="email"
+            aria-describedby="email"
+            className="mb-3"
+            value={formStateReducer.email}
+            onChange={(e) => textChange(e)}
+            autoComplete="new-password"
+          />
+        </Group>
+        <Group>
+          <Label htmlFor="inputPassword">&gt; Password</Label>
+          <Control
+            {...register("password", {
+              required: {
+                value: true,
+                message: "You need to specify a password",
+              },
+              minLength: {
+                value: 6,
+                message: "Password must have at least 6 characters",
+              },
+            })}
+            placeholder="Password"
+            type="password"
+            name="password"
+            aria-describedby="passwordHelpBlock"
+            className="mb-3"
+            value={formStateReducer.password}
+            onChange={(e) => textChange(e)}
+            autoComplete="new-password"
+          />
+        </Group>
+        {!formState.isValid && formState.isSubmitted ? (
+          <Alert variant="danger">
+            {Object.values(errors).map((item, idx) => {
+              return (
+                <p className="text-lowercase small" key={idx}>
+                  {item.message}
+                </p>
+              );
+            })}
+          </Alert>
+        ) : (
+          <Alert variant="success text-lowercase small">
+            Please fill in the form
+          </Alert>
+        )}
+        <Button type="submit" variant="outline-secondary">
           Log-In
-        </button>
-      </form>
+        </Button>
+      </Form>
     </div>
   );
 }
