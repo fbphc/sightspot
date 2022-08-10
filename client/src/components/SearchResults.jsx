@@ -5,7 +5,7 @@ import { Context } from "../context/Context";
 import NotFound from "./NotFound";
 import { Button } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
+import {clientAPI} from "../utils/axios-utils.js"
 
 
 function SearchResults() {
@@ -16,12 +16,15 @@ function SearchResults() {
   const params = useParams();
 
   useEffect(() => {
-    const path = `/search/${params.title}`;
-     axios
-     .get(path)
-      .then((searchResults) => setResultSearch(searchResults.data.results))
-      .catch((err) => console.log(err));
-    }, [params]);
+    (async () => {
+      try {
+        const response = await clientAPI.get(`/search/${params.title}`)
+        const topRated = setResultSearch(response.data.results)
+      } catch (error) {
+        console.log(error);
+      }
+    })()
+  }, [params]);
 
   const navigate = useNavigate();
   if (resultSearch.length === 0) {

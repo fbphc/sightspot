@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 
 function Upcoming() {
-  const { fetchedData, setSearchInput, IMG_URL } = useContext(Context);
+  const { fetchedData, IMG_URL } = useContext(Context);
 
   const navigate = useNavigate();
   return (

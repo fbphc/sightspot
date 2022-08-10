@@ -69,6 +69,7 @@ function SignUp() {
         if (err.response) return alert(err.response.data.msg);
       });
   }
+ 
 
   return (
     <div className="mt-5">

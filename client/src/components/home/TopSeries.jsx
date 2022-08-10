@@ -2,7 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Context } from "../../context/Context";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+
+import {clientAPI} from "../../utils/axios-utils.js"
+
 
 /**---MOVIES----------------------------- */
 
@@ -12,11 +14,17 @@ function TopRated() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get(`/home/top/tv`)
-      .then((topRated) => setFetchedTop(topRated.data.results))
-      .catch((err) => console.log(err));
+    (async () => {
+      try {
+        const response = await clientAPI.get(`/home/top/tv`)
+        const topRated = setFetchedTop(response.data.results)
+      } catch (error) {
+        console.log(error);
+      }
+    })()
   }, []);
+
+  
 
   return (
     <>

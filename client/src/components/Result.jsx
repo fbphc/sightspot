@@ -1,17 +1,16 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Row, Col, Button } from "react-bootstrap";
-import axios from "axios";
 import { Context } from "../context/Context";
 import logoSmall from "../img/logo_transparent_small.png";
 import ResultSmilar from "./ResultSmilar";
 import YouComponent from "./YouComponent";
-
+import {clientAPI} from "../utils/axios-utils.js"
 
 
 function Result() {
   const { IMG_URL } = useContext(Context);
-
+ 
   const inState = {
     genres: [],
     spoken_languages: [],
@@ -30,12 +29,16 @@ function Result() {
     contentId: params.name.split("&")[1],
   };
 
-
+  
   useEffect(() => {
-    axios
-      .get(`/${contentParams.mediaType}/${contentParams.contentId}`)
-      .then((searchResults) => setMovieData(searchResults.data))
-      .catch((err) => console.log(err));
+    (async () => {
+      try {
+        const response = await clientAPI.get(`/${contentParams.mediaType}/${contentParams.contentId}`)
+        const topRated = setMovieData(response.data)
+      } catch (error) {
+        console.log(error);
+      }
+    })()
   }, [contentParams.contentId, contentParams.mediaType]);
 
  

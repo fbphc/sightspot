@@ -1,8 +1,8 @@
-import axios from "axios";
 import React, { useEffect, useState, useContext } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Context } from "../context/Context";
+import {clientAPI} from "../utils/axios-utils.js"
 
 import Carousel from "better-react-carousel";
 
@@ -12,12 +12,16 @@ function ResultSmilar({ contentParams }) {
   const { IMG_URL } = useContext(Context);
 
   useEffect(() => {
-    axios
-      .get(`/${contentParams.mediaType}S/${contentParams.contentId}`)
-
-      .then((searchResults) => setSimilar(searchResults.data))
-      .catch((err) => console.log(err));
+    (async () => {
+      try {
+        const response = await clientAPI.get(`/${contentParams.mediaType}S/${contentParams.contentId}`)
+        const topRated = setSimilar(response.data)
+      } catch (error) {
+        console.log(error);
+      }
+    })()
   }, [contentParams.contentId, contentParams.mediaType, similarId]);
+
 
   return (
     <div className="container">
