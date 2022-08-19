@@ -1,75 +1,45 @@
 import React, { useReducer, useContext, useState, useRef } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { FaSignInAlt } from "react-icons/fa";
-import axios from "axios";
+
+import { postMethod } from "../../utils/axios-utils.js";
+
 import { Context } from "../../context/Context";
 import { useForm } from "react-hook-form";
 
-function formReducer(state, action) {
-  switch (action.type) {
-    case "HANDLE_TEXT":
-      return {
-        ...state,
-        [action.field]: action.payload,
-      };
-    case "DEFAULT":
-      return {
-        email: "",
-        password: "",
-      };
-    default:
-      return state;
-  }
-}
+import useAuth from "../../context/auth/useAuth";
 
-function SignUp() {
-  const iniStateSignUp = {
-    email: "",
-    password: "",
-  };
+function Login() {
+   
   /**-------USEFORM HOOK ------ */
   const { register, handleSubmit, formState, watch } = useForm();
   const { errors } = formState;
   const password = useRef({});
   password.current = watch("password", "");
   /**-------------------------- */
-  const { setShow, isLogged, setIsLogged } = useContext(Context);
+  const { setShow} = useContext(Context);
+  const { logIn, error, resetError } = useAuth();
+  
   const { Group, Label, Control } = { ...Form };
-  const [formStateReducer, dispatch] = useReducer(formReducer, iniStateSignUp);
-  const [signData, setSignData] = useState({});
+  
+  const [loginData, setLoginData] = useState({
+    email: "",
+    password: "",
+  });
 
-  function textChange(e) {
-    dispatch({
-      type: "HANDLE_TEXT",
-      field: e.target.name,
-      payload: e.target.value,
+  const changehandler = (e) => {
+    const elementName = e.target.name;
+    const value = e.target.value;
+    resetError();
+    setLoginData((oldState) => {
+      return { ...oldState, [elementName]: value };
     });
-  }
-  function submit() {
-    axios
-      .post(
-        `/user/login`,
-        {
-          email: formStateReducer.email,
-          password: formStateReducer.password,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((response) => {
-        setSignData(response);
-        setShow(false);
-        setIsLogged(true)
-        return alert("You are logged in!")
-      })
-      .catch((err) => {
-        if (err.response) return alert(err.response.data.msg);
-      });
-  }
- 
+  };
+  const submit = async () => {
+    logIn(loginData)
+    };
+    
+    
 
   return (
     <div className="mt-5">
@@ -80,7 +50,7 @@ function SignUp() {
       <Form onSubmit={handleSubmit(submit)} className="simpleForm">
         <Group>
           <Label htmlFor="email">&gt; E-mail</Label>
-          {isLogged && <p className="text-success">logged</p>}
+          
           <Control
             {...register("email", {
               required: {
@@ -98,13 +68,12 @@ function SignUp() {
             name="email"
             aria-describedby="email"
             className="mb-3"
-            value={formStateReducer.email}
-            onChange={(e) => textChange(e)}
+            onChange={(e) => changehandler(e)}
             autoComplete="new-password"
           />
         </Group>
         <Group>
-          <Label htmlFor="inputPassword">&gt; Password</Label>
+          <Label htmlFor="password">&gt; Password</Label>
           <Control
             {...register("password", {
               required: {
@@ -121,12 +90,11 @@ function SignUp() {
             name="password"
             aria-describedby="passwordHelpBlock"
             className="mb-3"
-            value={formStateReducer.password}
-            onChange={(e) => textChange(e)}
+            onChange={(e) => changehandler(e)}
             autoComplete="new-password"
           />
         </Group>
-        {!formState.isValid && formState.isSubmitted ? (
+        { error ? null : !formState.isValid && formState.isSubmitted ? (
           <Alert variant="danger">
             {Object.values(errors).map((item, idx) => {
               return (
@@ -141,12 +109,16 @@ function SignUp() {
             Please fill in the form
           </Alert>
         )}
+        {error && 
+          <p className="small text-danger">
+            incorrect Password or Email
+          </p>}
         <Button type="submit" variant="outline-secondary">
           Log-In
         </Button>
       </Form>
     </div>
   );
-}
+        }
 
-export default SignUp;
+export default Login;

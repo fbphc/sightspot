@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Context } from "../context/Context";
-import NotFound from "./NotFound";
+import { Context } from "../../context/Context";
+import Spinner from "../Spinner";
 import { Button } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import {clientAPI} from "../utils/axios-utils.js"
+import {clientAPI} from "../../utils/axios-utils.js"
 
 
 function SearchResults() {
@@ -28,7 +28,7 @@ function SearchResults() {
 
   const navigate = useNavigate();
   if (resultSearch.length === 0) {
-    return <NotFound />;
+    return <Spinner />;
   } else {
     return (
       <>
@@ -89,7 +89,7 @@ function SearchResults() {
                           </b>
                         </p>
                         <p className="my-1">
-                          Type: <b>{item.media_type}</b>
+                          Type: <b>{item.media_type === "tv" ? "serie" : item.media_type}</b>
                         </p>
                         <p className="my-1">
                           <b>

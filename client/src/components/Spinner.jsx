@@ -13,6 +13,6 @@ function Spinner() {
   )
 }
 
-export default Spinner
+export default Spinner;
 
 

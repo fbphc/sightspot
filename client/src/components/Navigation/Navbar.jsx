@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   Navbar,
   Button,
@@ -6,31 +6,38 @@ import {
   Tooltip,
   OverlayTrigger,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Context } from "../../context/Context";
 import SignUp from "../auth/SignUp";
 import Login from "../auth/Login";
 import logo from "../../img/logo_transparent.png";
 import logoSmall from "../../img/logo_transparent_small_black.png";
-import {
-  FaAngleDoubleUp,
-  FaFilm,
-  FaTv,
-  FaBars,
-  FaSignInAlt,
-  FaSignOutAlt,
-} from "react-icons/fa";
+import { FaAngleDoubleUp, FaFilm, FaTv, FaBars } from "react-icons/fa";
+import { HiLogin, HiLogout } from "react-icons/hi";
+import decode from "jwt-decode";
+import useAuth from "../../context/auth/useAuth";
 
 function Nav() {
-  const { show, setShow, isLogged } = useContext(Context);
+  const { show, setShow } = useContext(Context);
+  const { tokenValidator, signOut, isAuthenticated } = useAuth();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const location = useLocation();
 
   const offlinkStyle = {
     color: "#333",
     fontSize: "1.5rem",
   };
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      /* const decodedToken = decode(token) */
+      const isValid = tokenValidator();
+
+      //if (isValid.statusText !== "OK") return signOut();
+    }
+  }, [location]);
 
   return (
     <Navbar
@@ -43,40 +50,38 @@ function Nav() {
         <p className="text-light my-auto h5">SightSpot</p>
       </div>
       <div>
-        
-
-        {isLogged ? (
+        {isAuthenticated ? (
           <OverlayTrigger
-          key="left"
-          placement="left"
-          overlay={<Tooltip>Log-Out</Tooltip>}
-        >
-          <Button
-            onClick={handleShow}
-            variant="secondary"
-            className="bg-dark mx-3"
+            key="left"
+            placement="left"
+            overlay={<Tooltip>Log-Out</Tooltip>}
           >
-            <h3>
-              <FaSignOutAlt className="text-white" />
-            </h3>
-          </Button>
-        </OverlayTrigger>
+            <Button
+              onClick={signOut}
+              variant="secondary"
+              className="bg-dark mx-3"
+            >
+              <h3>
+                <HiLogout className="text-white" />
+              </h3>
+            </Button>
+          </OverlayTrigger>
         ) : (
           <OverlayTrigger
-          key="left"
-          placement="left"
-          overlay={<Tooltip>Log-In</Tooltip>}
-        >
-          <Button
-            onClick={handleShow}
-            variant="primary"
-            className="bg-dark mx-3"
+            key="left"
+            placement="left"
+            overlay={<Tooltip>Log-In</Tooltip>}
           >
-            <h3>
-              <FaSignInAlt className="text-white" />
-            </h3>
-          </Button>
-        </OverlayTrigger>
+            <Button
+              onClick={handleShow}
+              variant="primary"
+              className="bg-dark mx-3"
+            >
+              <h3>
+                <HiLogin className="text-white" />
+              </h3>
+            </Button>
+          </OverlayTrigger>
         )}
 
         {
@@ -114,7 +119,7 @@ function Nav() {
           <div>
             <Link
               className="d-flex my-2"
-              to="/top_Movies"
+              to="/movies"
               onClick={() => setShow(false)}
               style={offlinkStyle}
             >
@@ -125,7 +130,7 @@ function Nav() {
           <div>
             <Link
               className="d-flex my-2"
-              to="/top_Series"
+              to="/series"
               onClick={() => setShow(false)}
               style={offlinkStyle}
             >
@@ -133,8 +138,8 @@ function Nav() {
               <h4>Top Rated Series</h4>
             </Link>
           </div>
-          <SignUp />
-          <Login />
+          {!isAuthenticated && <SignUp />}
+          {!isAuthenticated && <Login />}
         </Offcanvas.Body>
       </Offcanvas>
     </Navbar>

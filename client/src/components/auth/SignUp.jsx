@@ -3,33 +3,41 @@ import { Alert, Button, Form } from "react-bootstrap";
 import { FaUserAstronaut } from "react-icons/fa";
 import { Context } from "../../context/Context";
 import { useForm } from "react-hook-form";
-import { AuthContext } from "../../context/AuthContext";
-import { signUp } from "../../utils/axios-utils.js";
+import useAuth from "../../context/auth/useAuth";
+
 
 function SignUp() {
-  const { textChange, formStateReducer } = useContext(AuthContext);
-  const { setShow } = useContext(Context);
-
   /**-------USEFORM HOOK ------ */
   const { register, handleSubmit, formState } = useForm();
   const { Group, Label, Control } = { ...Form };
   const { errors } = formState;
   /**-------------------------- */
 
-  function submit() {
-    const user = {
-      name: formStateReducer.username,
-      email: formStateReducer.email,
-      password: formStateReducer.password,
-      confPassword: formStateReducer.confPassword,
-    };
-    if (formStateReducer.password === formStateReducer.confPassword) {
-      signUp(user);
-      setShow(false);
-    } else {
+  const { signUp, error, resetError, isAuthenticated } = useAuth();
+  const { setShow } = useContext(Context);
+  const [signUpData, setSignUpData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confPassword: "",
+  });
+  
+  const submit = async () => {
+    if (signUpData.password !== signUpData.confPassword) {
       return alert("Passwords don't match");
-    }
-  }
+    } 
+      signUp(signUpData);
+  };
+ 
+  const changehandler = (e) => {
+    const elementName = e.target.name;
+    const value = e.target.value;
+    resetError();
+    setSignUpData((oldState) => {
+      return { ...oldState, [elementName]: value };
+    });
+  };
+  
 
   return (
     <div className="mt-5">
@@ -40,7 +48,7 @@ function SignUp() {
         <Group>
           <Label>&gt; Username</Label>
           <Control
-            {...register("username", {
+            {...register("name", {
               required: {
                 value: true,
                 message: "You must specify your username",
@@ -48,12 +56,11 @@ function SignUp() {
             })}
             placeholder="Your name"
             type="text"
-            name="username"
-            aria-describedby="username"
+            name="name"
+            aria-describedby="name"
             className="mb-3"
-            value={formStateReducer.username}
-            onChange={(e) => textChange(e)}
-            autoComplete="new-password"
+            //value={formStateReducer.username}
+            onChange={(e) => changehandler(e)}
           />
         </Group>
         <Group>
@@ -75,8 +82,8 @@ function SignUp() {
             name="email"
             aria-describedby="email"
             className="mb-3"
-            value={formStateReducer.email}
-            onChange={(e) => textChange(e)}
+            //value={formStateReducer.email}
+            onChange={(e) => changehandler(e)}
             autoComplete="new-password"
           />
         </Group>
@@ -96,10 +103,10 @@ function SignUp() {
             placeholder="Password"
             type="password"
             name="password"
-            aria-describedby="passwordHelpBlock"
+            aria-describedby="password"
             className="mb-3"
-            value={formStateReducer.password}
-            onChange={(e) => textChange(e)}
+            //value={formStateReducer.password}
+            onChange={(e) => changehandler(e)}
             autoComplete="new-password"
           />
         </Group>
@@ -111,14 +118,14 @@ function SignUp() {
             name="confPassword"
             aria-describedby="confPassword"
             className="mb-3"
-            value={formStateReducer.confPassword}
-            onChange={(e) => textChange(e)}
+            //value={formStateReducer.confPassword}
+            onChange={(e) => changehandler(e)}
             autoComplete="new-password"
           />
         </Group>
 
-        {!formState.isValid && formState.isSubmitted ? (
-          <Alert variant="muted">
+        {error  ? null : !formState.isValid && formState.isSubmitted ? (
+          <Alert variant="danger">
             {Object.values(errors).map((item, idx) => {
               return (
                 <p className="text-lowercase small" key={idx}>
@@ -132,7 +139,10 @@ function SignUp() {
             <p className="text-lowercase small">Please fill in the form</p>
           </Alert>
         )}
-
+        {error && 
+          <p className="small text-danger">
+            This Email is already in the database!
+          </p>}
         <Button type="submit" variant="outline-secondary">
           Sign Up
         </Button>

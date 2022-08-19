@@ -1,41 +1,45 @@
 import React, { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Context } from "../../context/Context";
-import { useNavigate } from "react-router-dom";
-
-import {clientAPI} from "../../utils/axios-utils.js"
-
+import { useNavigate, useLocation } from "react-router-dom";
+import { clientAPI } from "../../utils/axios-utils.js";
+import axios from "axios";
 
 /**---MOVIES----------------------------- */
 
 function TopRated() {
-  const { setSearchInput, IMG_URL } = useContext(Context);
+  const { IMG_URL } = useContext(Context);
   const [fetchedTop, setFetchedTop] = useState([]);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     (async () => {
       try {
-        const response = await clientAPI.get(`/home/top/tv`)
-        const topRated = setFetchedTop(response.data.results)
+        const response = await clientAPI.get(
+          `/home/top/${location.pathname === "/movies" ? "movie" : "tv"}`
+        );
+        const topRated = setFetchedTop(response.data.results);
       } catch (error) {
         console.log(error);
       }
-    })()
-  }, []);
-
-  
+    })();
+  }, [location]);
 
   return (
     <>
-      <h1 className="text-center">Top Rated Series</h1>
+      {location.pathname === "/movies" ? (
+        <h1 className="text-center">Top Rated Movies</h1>
+      ) : (
+        <h1 className="text-center">Top Rated Series</h1>
+      )}
+
       <div className="mx-auto d-flex flex-wrap justify-content-center">
         {fetchedTop.map((item) => {
           return (
             <div
               onClick={() => {
-                navigate(`/search_Results/search/${item.name}`);
-
+                navigate(`/search_Results/search/${item.title ? item.title : item.name}`);
               }}
               key={item.id}
               style={{
@@ -72,19 +76,22 @@ function TopRated() {
                   }}
                   className="position-absolute bottom-0 d-flex flex-column  text-center shadow-lg"
                 >
+                    
                   <p className="my-1">
-                    <b>{item.name}</b>
+                    <b>{location.pathname === "/movies" ? item.title : item.name}</b>
                   </p>
-                  {item.first_air_date === undefined ? (
-                    <p> - </p>
+                  {location.pathname === "/movies" ? (
+                      item.release_date && 
+                    <p className="my-1">
+                      <b>{item.release_date.split("-")[0]}</b>
+                    </p>
                   ) : (
+                    item.first_air_date &&
                     <p className="my-1">
                       <b>{item.first_air_date.split("-")[0]}</b>
                     </p>
                   )}
-                  {/* <p className="my-1">
-                      <b>{item.release_date.split("-")[0]}</b>
-                    </p> */}
+
                   <p className="my-1">
                     Rate: <b>{item.vote_average}</b>
                   </p>

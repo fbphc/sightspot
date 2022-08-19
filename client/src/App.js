@@ -1,44 +1,41 @@
 import { Provider } from "./context/Context";
-import { Provider as AuthProvider } from "./context/AuthContext";
 import "./App.css";
-import Nav from "./components/layout/Navbar";
+import Nav from "./components/Navigation/Navbar";
 import { Route, Routes } from "react-router-dom";
 import Home from "./components/home/Home";
 import Board from "./components/Board";
-import Footer from "./components/layout/Footer";
+import Footer from "./components/home/Footer";
 import Result from "./components/Result";
-import SearchResults from "./components/SearchResults";
-import TopMovies from "./components/home/TopMovies";
-import TopSeries from "./components/home/TopSeries";
-
-import ImgCarousel from "./components/layout/Carousel";
-import Inputs from "./components/layout/Inputs";
+import SearchResults from "./components/Search/SearchResults";
+import TopRated from "./components/home/TopRated";
+import ImgCarousel from "./components/home/Carousel";
+import Inputs from "./components/Search/SearchBar";
+import { AuthProvider } from "./context/auth/authContext";
 
 function App() {
   return (
     <>
-      <AuthProvider>
-        <Provider>
+      <Provider>
+        <AuthProvider>
           <div className="App">
             <Nav />
             <ImgCarousel />
             <Inputs />
+
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/top_Movies" element={<TopMovies />} />
-              <Route path="/top_Series" element={<TopSeries />} />
+              <Route path="/:name" element={<TopRated />}></Route>
               <Route
                 path="/search_Results/search/:title"
                 element={<SearchResults />}
               />
               <Route path="/search_Results/:name" element={<Result />} />
-
               <Route path="/board" element={<Board />} />
             </Routes>
             <Footer />
           </div>
-        </Provider>
-      </AuthProvider>
+        </AuthProvider>
+      </Provider>
     </>
   );
 }

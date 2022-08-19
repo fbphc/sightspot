@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Carousel } from "react-bootstrap";
-//import Carousel from "better-react-carousel";
+
 
 import { Context } from "../../context/Context";
 import logo from "../../img/logo_SightSpot.png";
@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
 function ImgCarousel() {
-  const { fetchedData, setSearchInput, IMG_URL } = useContext(Context);
+  const { fetchedData, IMG_URL } = useContext(Context);
 
   const navigate = useNavigate();
 
