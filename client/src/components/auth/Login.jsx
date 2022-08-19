@@ -1,8 +1,6 @@
-import React, { useReducer, useContext, useState, useRef } from "react";
+import React, {  useContext, useState, useRef } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { FaSignInAlt } from "react-icons/fa";
-
-import { postMethod } from "../../utils/axios-utils.js";
 
 import { Context } from "../../context/Context";
 import { useForm } from "react-hook-form";
@@ -17,9 +15,9 @@ function Login() {
   const password = useRef({});
   password.current = watch("password", "");
   /**-------------------------- */
-  const { setShow} = useContext(Context);
+
   const { logIn, error, resetError } = useAuth();
-  
+  const {setToggleAuth} = useContext(Context)
   const { Group, Label, Control } = { ...Form };
   
   const [loginData, setLoginData] = useState({
@@ -113,9 +111,16 @@ function Login() {
           <p className="small text-danger">
             incorrect Password or Email
           </p>}
-        <Button type="submit" variant="outline-secondary">
+          
+
+        <Button type="submit" variant="outline-secondary" >
           Log-In
         </Button>
+        <p className="d-inline small mx-3 text-lowercase">Or</p>
+        <Button onClick={() => setToggleAuth(false)} variant="outline-info text-dark" >
+          Sign Up
+        </Button>
+         
       </Form>
     </div>
   );

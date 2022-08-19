@@ -15,9 +15,7 @@ export const AuthProvider = ({ children }) => {
       dispatch({ type: "AUTH_SIGNUP", payload: response.data });
       setShow(false);
       alert("You are Registered");
-      
     } catch (err) {
-     
       dispatch({ type: "SIGNIN_ERR", payload: err.message });
     }
   };
@@ -34,16 +32,13 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-
-  
-
   const tokenValidator = async () => {
     try {
       const response = await validateToken();
-      if(response.data.message){
-      dispatch({type :"SIGN_OUT"})
-      if(localStorage.getItem("token")) localStorage.removeItem("token")
-      }else{
+      if (response.data.message) {
+        dispatch({ type: "SIGN_OUT" });
+        if (localStorage.getItem("token")) localStorage.removeItem("token");
+      } else {
         dispatch({
           type: "AUTH_VALID",
           payload: { name: response.data.name, id: response.data.id },
@@ -53,14 +48,16 @@ export const AuthProvider = ({ children }) => {
       console.log(err);
     }
   };
+
   const signOut = () => {
-    dispatch({type :"SIGN_OUT"})
-    if(localStorage.getItem("token")) localStorage.removeItem("token");
-}
+    dispatch({ type: "SIGN_OUT" });
+    if (localStorage.getItem("token")) localStorage.removeItem("token");
+  };
+
   const resetError = () => {
     dispatch({ type: "CLR_ERR" });
   };
-console.log(state);
+
   const value = {
     logIn,
     signUp,
@@ -69,7 +66,7 @@ console.log(state);
     tokenValidator,
     resetError,
     signOut,
-    state
+    state,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

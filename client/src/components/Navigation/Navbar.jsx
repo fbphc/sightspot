@@ -14,12 +14,15 @@ import logo from "../../img/logo_transparent.png";
 import logoSmall from "../../img/logo_transparent_small_black.png";
 import { FaAngleDoubleUp, FaFilm, FaTv, FaBars } from "react-icons/fa";
 import { HiLogin, HiLogout } from "react-icons/hi";
-import decode from "jwt-decode";
 import useAuth from "../../context/auth/useAuth";
 
 function Nav() {
-  const { show, setShow } = useContext(Context);
-  const { tokenValidator, signOut, isAuthenticated } = useAuth();
+  const { show, setShow, decodedToken, toggleAuth } = useContext(Context);
+  const {
+    tokenValidator,
+    signOut,
+    isAuthenticated,
+  } = useAuth();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -32,13 +35,9 @@ function Nav() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      /* const decodedToken = decode(token) */
       const isValid = tokenValidator();
-
-      //if (isValid.statusText !== "OK") return signOut();
     }
   }, [location]);
-
   return (
     <Navbar
       className="position-sticky top-0 bg-dark d-flex justify-content-between"
@@ -138,8 +137,15 @@ function Nav() {
               <h4>Top Rated Series</h4>
             </Link>
           </div>
-          {!isAuthenticated && <SignUp />}
-          {!isAuthenticated && <Login />}
+          {!isAuthenticated && (
+            <>
+             { toggleAuth ?
+               <Login /> :
+              <SignUp />
+            } 
+               
+            </>
+          )}
         </Offcanvas.Body>
       </Offcanvas>
     </Navbar>

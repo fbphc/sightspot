@@ -14,7 +14,7 @@ function SignUp() {
   /**-------------------------- */
 
   const { signUp, error, resetError, isAuthenticated } = useAuth();
-  const { setShow } = useContext(Context);
+  const { setShow, setToggleAuth } = useContext(Context);
   const [signUpData, setSignUpData] = useState({
     name: "",
     email: "",
@@ -145,6 +145,10 @@ function SignUp() {
           </p>}
         <Button type="submit" variant="outline-secondary">
           Sign Up
+        </Button>
+        <p className="d-inline small mx-3 text-lowercase">Or</p>
+        <Button onClick={() => setToggleAuth(true)} variant="outline-info text-dark" >
+          Back
         </Button>
       </Form>
     </div>

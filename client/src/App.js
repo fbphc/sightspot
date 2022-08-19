@@ -1,7 +1,7 @@
 import { Provider } from "./context/Context";
 import "./App.css";
 import Nav from "./components/Navigation/Navbar";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import Home from "./components/home/Home";
 import Board from "./components/Board";
 import Footer from "./components/home/Footer";
@@ -21,7 +21,6 @@ function App() {
             <Nav />
             <ImgCarousel />
             <Inputs />
-
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/:name" element={<TopRated />}></Route>
@@ -30,6 +29,7 @@ function App() {
                 element={<SearchResults />}
               />
               <Route path="/search_Results/:name" element={<Result />} />
+              
               <Route path="/board" element={<Board />} />
             </Routes>
             <Footer />

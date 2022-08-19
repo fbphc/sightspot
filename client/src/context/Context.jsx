@@ -5,9 +5,9 @@ const Context = createContext();
 
 function Provider({ children }) {
   const [show, setShow] = useState(true);
+  const [toggleAuth, setToggleAuth] = useState(true);
   const [fetchedData, setFetchedData] = useState([]);
 
-  
   const IMG_URL = "https://image.tmdb.org/t/p/w1280";
 
   useEffect(() => {
@@ -28,7 +28,8 @@ function Provider({ children }) {
         IMG_URL,
         show,
         setShow,
-     
+        toggleAuth,
+        setToggleAuth,
       }}
     >
       {children}
