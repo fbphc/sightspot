@@ -7,12 +7,11 @@ function CommentForm() {
   const { newComment } = useBoard();
   const { userLoc } = useAuth();
 
-
   const [commentData, setCommentData] = useState({
     textarea: "",
-    topic: "",
+    topic: "news",
     userId: userLoc.id,
-    author: userLoc.name
+    author: userLoc.name,
   });
   const changehandler = (e) => {
     const elementName = e.target.name;
@@ -25,7 +24,8 @@ function CommentForm() {
 
   function onSubmit(e) {
     e.preventDefault();
-    newComment(commentData)
+    newComment(commentData);
+    e.target.reset();
   }
 
   return (
@@ -35,8 +35,8 @@ function CommentForm() {
     >
       <Form onSubmit={onSubmit}>
         <Form.Group className="mb-3">
-          <Form.Select className="mb-3" onChange={changehandler} name="topic">
-            <option>Choose a topic</option>
+        <Form.Label className="mx-1 h4">Choose a Topic</Form.Label>
+          <Form.Select className="mb-3" onChange={changehandler} name="topic" required>
             <option value="news">News</option>
             <option value="theater">Theater</option>
             <option value="other">Other...</option>
@@ -50,6 +50,7 @@ function CommentForm() {
             rows={5}
             type="text"
             placeholder="Your Message"
+            required
           />
         </Form.Group>
         <Button variant="outline-secondary" type="submit">

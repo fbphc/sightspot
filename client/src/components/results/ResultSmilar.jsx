@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Context } from "../context/Context";
-import {clientAPI} from "../utils/axios-utils.js"
+import { Context } from "../../context/Context";
+import {clientAPI} from "../../utils/axios-utils.js"
 
 import Carousel from "better-react-carousel";
 

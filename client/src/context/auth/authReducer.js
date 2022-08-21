@@ -12,7 +12,6 @@ const authReducer = (state, action) => {
       return {
         ...state,
         isAuthenticated: true,
-
         user: payload.user,
       };
     }

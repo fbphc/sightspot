@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Row, Col, Button } from "react-bootstrap";
-import { Context } from "../context/Context";
-import logoSmall from "../img/logo_transparent_small.png";
+import { Context } from "../../context/Context";
+import logoSmall from "../../img/logo_transparent_small.png";
 import ResultSmilar from "./ResultSmilar";
-import YouComponent from "./YouComponent";
-import {clientAPI} from "../utils/axios-utils.js"
+import YouComponent from "../youtube/YouComponent";
+import {clientAPI} from "../../utils/axios-utils.js"
 
 
 function Result() {

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import Spinner from "../Spinner";
+import Spinner from "../error/Spinner";
 import { Context } from "../../context/Context";
 import Upcoming from "./Upcoming";
 

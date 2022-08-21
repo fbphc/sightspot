@@ -1,15 +1,23 @@
-import { createContext } from "react";
+import { createContext, useReducer } from "react";
 import { addComment } from "../../utils/axios-utils.js";
-import jwt_decode from "jwt-decode";
+import boardReducer, { boardState } from "./boardReducer";
+
 
 
 export const BoardContext = createContext();
 
 export const BoardProvider = ({ children }) => {
-    
+    const [state, dispatch] = useReducer(boardReducer, boardState);
 
 const newComment = async(comment)=>{
-    const response = await addComment(comment);
+    
+    try {
+        const response = await addComment(comment);
+        console.log(response);
+        dispatch({ type: "ADD_COMMENT", payload: response.data });
+    } catch (err) {
+        dispatch({ type: "COMMENT_ERR", payload: err.message });
+    }
 }
 
     const value = {
