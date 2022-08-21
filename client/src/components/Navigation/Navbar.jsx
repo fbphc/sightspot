@@ -11,18 +11,15 @@ import { Context } from "../../context/Context";
 import SignUp from "../auth/SignUp";
 import Login from "../auth/Login";
 import logo from "../../img/logo_transparent.png";
-import logoSmall from "../../img/logo_transparent_small_black.png";
 import { FaAngleDoubleUp, FaFilm, FaTv, FaBars } from "react-icons/fa";
-import { HiLogin, HiLogout } from "react-icons/hi";
+import { HiUser, HiLogout } from "react-icons/hi";
 import useAuth from "../../context/auth/useAuth";
+import logo2 from "../../img/logo_transparent_small_black.png";
+import { MdForum } from "react-icons/md";
 
 function Nav() {
-  const { show, setShow, decodedToken, toggleAuth } = useContext(Context);
-  const {
-    tokenValidator,
-    signOut,
-    isAuthenticated,
-  } = useAuth();
+  const { show, setShow, toggleAuth } = useContext(Context);
+  const { tokenValidator, signOut, isAuthenticated, userLoc } = useAuth();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -37,7 +34,8 @@ function Nav() {
     if (token) {
       const isValid = tokenValidator();
     }
-  }, [location]);
+  }, [location, userLoc.name]);
+
   return (
     <Navbar
       className="position-sticky top-0 bg-dark d-flex justify-content-between"
@@ -46,7 +44,10 @@ function Nav() {
     >
       <div className="d-flex">
         <img className="pl-5" src={logo} alt="logo" style={{ width: "4rem" }} />
-        <p className="text-light my-auto h5">SightSpot</p>
+        {
+          userLoc.name ? <p className="text-light my-auto h5">SightSpot / {userLoc.name && userLoc.name.toUpperCase()}</p> : <p className="text-light my-auto h5">SightSpot</p>
+        }
+        
       </div>
       <div>
         {isAuthenticated ? (
@@ -77,7 +78,7 @@ function Nav() {
               className="bg-dark mx-3"
             >
               <h3>
-                <HiLogin className="text-white" />
+                <HiUser className="text-white" />
               </h3>
             </Button>
           </OverlayTrigger>
@@ -99,11 +100,12 @@ function Nav() {
         <Offcanvas.Header closeButton style={{ backgroundColor: "#89b6f4" }}>
           <Offcanvas.Title>
             <div className="w-25">
-              <img src={logoSmall} alt="sightspot logo" className="w-100" />
+              {/* <img src={logoSmall} alt="sightspot logo" className="w-100" /> */}
+              <HiUser className="display-5 opacity-75"/>
             </div>
           </Offcanvas.Title>
         </Offcanvas.Header>
-        <Offcanvas.Body className="d-flex flex-column text-uppercase bg-light">
+        <Offcanvas.Body className="d-flex flex-column text-uppercase bg-light mt-3">
           <div>
             <Link
               className="d-flex my-2"
@@ -137,14 +139,27 @@ function Nav() {
               <h4>Top Rated Series</h4>
             </Link>
           </div>
-          {!isAuthenticated && (
-            <>
-             { toggleAuth ?
-               <Login /> :
-              <SignUp />
-            } 
-               
-            </>
+          {isAuthenticated && (
+            <div>
+              <Link
+                className="d-flex my-2"
+                to="/board"
+                onClick={() => setShow(false)}
+                style={offlinkStyle}
+              >
+                <MdForum className="mx-2 h3" />
+                <h4>Message Board</h4>
+              </Link>
+            </div>
+          )}
+          {!isAuthenticated && <>{toggleAuth ? <Login /> : <SignUp />}</>}
+          {isAuthenticated && (
+            <div
+              className="w-100 my-5 mx-auto"
+              style={{ transform: "rotateY(180deg)" }}
+            >
+              <img src={logo2} alt="logo" className="w-100 opacity-25" />
+            </div>
           )}
         </Offcanvas.Body>
       </Offcanvas>

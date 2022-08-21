@@ -12,6 +12,8 @@ import topMoviesRouter from "./routes/fetch/topRatedMovies.js";
 import topTvRouter from "./routes/fetch/topRatedTv.js";
 
 import userRouter from "./routes/userRouter.js";
+import commentRouter from "./routes/commentRouter.js";
+
 
 import mongoose from "mongoose";
 import { connectDB } from "./helper/dbConnect.js";
@@ -38,8 +40,12 @@ mongoose.connection.on("open", ()=>{
 mongoose.connection.on("error", (error)=>{
     console.log("Connection to MongoDB has failed", error.message)
 })
+
 /* --------------- */
-app.use("/user/", userRouter)
+app.use("/user", userRouter)
+
+/* --------------- */
+app.use("/comments", commentRouter)
 
 /* --- Fetchers --- */
 app.use("/home", upcomingRouter);

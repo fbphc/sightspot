@@ -30,6 +30,7 @@ const authReducer = (state, action) => {
         isAuthenticated: true,
 
         user: payload,
+        
       };
     }
     case "SIGNIN_ERR": {

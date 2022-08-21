@@ -4,7 +4,7 @@ import { clientAPI } from "../utils/axios-utils.js";
 const Context = createContext();
 
 function Provider({ children }) {
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   const [toggleAuth, setToggleAuth] = useState(true);
   const [fetchedData, setFetchedData] = useState([]);
 

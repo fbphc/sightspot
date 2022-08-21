@@ -9,10 +9,13 @@ export const login = (user) => {
 };
 
 export const validateToken = () => {
-  return clientAPI.get("/user/tokenValidation" ,{
-    headers:{
-        "Authorization" : `Bearer ${
-            localStorage.getItem("token")}`
-    }
-} )
+  return clientAPI.get("/user/tokenValidation", {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
 };
+
+export const addComment = (comment)=>{
+  return clientAPI.post("/comments/addComment", comment);
+}

@@ -14,7 +14,7 @@ function SignUp() {
   /**-------------------------- */
 
   const { signUp, error, resetError, isAuthenticated } = useAuth();
-  const { setShow, setToggleAuth } = useContext(Context);
+  const { setToggleAuth } = useContext(Context);
   const [signUpData, setSignUpData] = useState({
     name: "",
     email: "",

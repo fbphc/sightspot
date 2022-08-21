@@ -67,10 +67,8 @@ const loginUser = async (req, res) => {
     });
   };
   
-  const getAllUsers = async (req, res) => {
-    const { email } = req.body;
-    const users = await UserSightSpot.findByEmail(email);
-    res.status(200).json(users);
-  };
-
-export { registerUser, loginUser, getAllUsers };
+  const tokenValidator = (req, res) =>{
+    res.json(req.user)
+    
+}
+export { registerUser, loginUser, tokenValidator };
