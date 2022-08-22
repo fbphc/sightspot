@@ -139,7 +139,7 @@ function Nav() {
               <h4>Top Rated Series</h4>
             </Link>
           </div>
-          {isAuthenticated && (
+          
             <div>
               <Link
                 className="d-flex my-2"
@@ -151,7 +151,7 @@ function Nav() {
                 <h4>Message Board</h4>
               </Link>
             </div>
-          )}
+          
           {!isAuthenticated && <>{toggleAuth ? <Login /> : <SignUp />}</>}
           {isAuthenticated && (
             <div

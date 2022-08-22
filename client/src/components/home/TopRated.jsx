@@ -8,11 +8,11 @@ import axios from "axios";
 /**---MOVIES----------------------------- */
 
 function TopRated() {
-  const { IMG_URL } = useContext(Context);
+  const { IMG_URL, setHideSearch } = useContext(Context);
   const [fetchedTop, setFetchedTop] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
-
+  
   useEffect(() => {
     (async () => {
       try {

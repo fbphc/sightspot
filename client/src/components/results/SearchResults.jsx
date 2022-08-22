@@ -30,8 +30,8 @@ function SearchResults() {
 
   const navigate = useNavigate();
   
-  if (resultSearch === undefined) {
-    console.log(resultSearch)
+  if (resultSearch.length === 0) {
+    
     return <NotFound />;
   } else {
     return (

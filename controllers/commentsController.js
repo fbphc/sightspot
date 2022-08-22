@@ -18,3 +18,13 @@ export const addComment = async (req, res) => {
     res.status(400).json({ errorMessage: err.message });
   }
 };
+export const getAllComments = async (req, res)=>{
+  const allComments = await commentSightSpot.find()
+  try {
+    res
+      .status(200)
+      .json(allComments);
+  } catch (err) {
+    res.status(400).json({ errorMessage: err.message });
+  }
+}

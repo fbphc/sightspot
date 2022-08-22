@@ -8,8 +8,7 @@ import Footer from "./components/home/Footer";
 import Result from "./components/results/Result";
 import SearchResults from "./components/results/SearchResults";
 import TopRated from "./components/home/TopRated";
-import ImgCarousel from "./components/home/Carousel";
-import Inputs from "./components/Search/SearchBar";
+import Header from "./components/home/Header";
 import { AuthProvider } from "./context/auth/authContext";
 import { BoardProvider } from "./context/boardContext/BoardContext";
 
@@ -20,8 +19,9 @@ function App() {
         <AuthProvider>
           <div className="App">
             <Nav />
-            <ImgCarousel />
-            <Inputs />
+            <Header />
+            {/* <Inputs /> */}
+            
             <BoardProvider>
               <Routes>
                 <Route path="/" element={<Home />} />

@@ -47,7 +47,7 @@ function CommentForm() {
             onChange={changehandler}
             name="textarea"
             as="textarea"
-            rows={5}
+            rows={3}
             type="text"
             placeholder="Your Message"
             required

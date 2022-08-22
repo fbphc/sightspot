@@ -5,25 +5,25 @@ import CommentBoard from "./CommentBoard";
 import NotAuth from "./NotAuth";
 
 import useAuth from "../../context/auth/useAuth";
-
+import { Context } from "../../context/Context";
+import {useContext} from "react"
 function Board() {
   const { isAuthenticated } = useAuth();
-
   return (
     <>
-      <h1 className="text-center">Message Board</h1>
+      <h1 className="text-center mt-3 mb-5">Message Board</h1>
       {!isAuthenticated ? (
         <NotAuth />
       ) : (
         <div style={{ width: "80%", margin: "0 auto" }}>
           <Row>
-            <Col className="col-4">
+            <Col >
               <CommentForm />
             </Col>
-            <Col className="col-8" style={{ background: "blue" }}>
-              <CommentBoard />
+            <Col>
             </Col>
           </Row>
+              <CommentBoard/>
         </div>
       )}
     </>

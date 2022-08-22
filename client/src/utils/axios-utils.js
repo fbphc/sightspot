@@ -19,3 +19,6 @@ export const validateToken = () => {
 export const addComment = (comment)=>{
   return clientAPI.post("/comments/addComment", comment);
 }
+export const getAllComments = ()=>{
+  return clientAPI.get("/comments/getAllComments");
+}
